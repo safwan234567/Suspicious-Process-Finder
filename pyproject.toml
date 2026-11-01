@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "spf"
+version = "0.1.0"
+description = "SPF (Suspicious Process Finder): an unsupervised anomaly detector for Linux memory forensics"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "volatility3>=2.7",
+    "scikit-learn>=1.3",
+    "shap>=0.44",
+    "numpy>=1.24",
+    "pandas>=2.0",
+    "joblib>=1.3",
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7"]
+
+[project.scripts]
+spf = "spf.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["spf*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

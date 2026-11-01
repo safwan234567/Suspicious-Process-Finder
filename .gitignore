@@ -1,0 +1,23 @@
+# Memory images and symbol tables (too large for git)
+*.raw
+*.lime
+*.mem
+*.vmem
+*.json.xz
+symbols/*
+!symbols/.gitkeep
+
+# Trained models and generated output
+baseline/models/*
+!baseline/models/.gitkeep
+eval/results/*
+!eval/results/.gitkeep
+report*.json
+report*.html
+
+# Python
+__pycache__/
+*.pyc
+*.egg-info/
+.venv/
+.pytest_cache/
