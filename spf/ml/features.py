@@ -36,3 +36,10 @@ def build_features(proc: Process, parent_uid: int | None) -> dict[str, float]:
         "runs_from_tmp_or_shm": float(exe.startswith(SUSPICIOUS_DIRS)),
         "has_ld_preload": float("LD_PRELOAD" in proc.envars),
     }
+
+
+def features_for_processes(procs: list[Process]) -> list[tuple[int, dict[str, float]]]:
+    """Build the feature vector for every process, resolving each one's parent UID
+    from the process list. Returns a list of (pid, features) pairs."""
+    uid_by_pid = {p.pid: p.uid for p in procs}
+    return [(p.pid, build_features(p, uid_by_pid.get(p.ppid))) for p in procs]

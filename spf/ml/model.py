@@ -20,6 +20,7 @@ class SPFModel:
         self.percentile = percentile
         self.forest = IsolationForest(random_state=random_state)
         self.threshold: float | None = None
+        self.feature_means: np.ndarray | None = None  # clean-baseline means, for explanations
 
     @staticmethod
     def to_matrix(rows: list[dict[str, float]]) -> np.ndarray:
@@ -30,7 +31,9 @@ class SPFModel:
         return -self.forest.score_samples(self.to_matrix(rows))
 
     def fit(self, clean_rows: list[dict[str, float]]) -> "SPFModel":
-        self.forest.fit(self.to_matrix(clean_rows))
+        X = self.to_matrix(clean_rows)
+        self.forest.fit(X)
+        self.feature_means = X.mean(axis=0)
         self.threshold = float(np.percentile(self.score(clean_rows), self.percentile))
         return self
 
