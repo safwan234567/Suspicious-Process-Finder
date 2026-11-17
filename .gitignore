@@ -16,6 +16,11 @@ baseline/models/*
 eval/results/*
 !eval/results/.gitkeep
 !eval/results/metrics.json
+!eval/results/clean_jit.json
+!eval/results/clean_jit.html
+!eval/results/infected_both.json
+!eval/results/infected_both.html
+!eval/results/chkrootkit_live_output.txt
 report*.json
 report*.html
 
