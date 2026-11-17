@@ -19,12 +19,13 @@ This report documents the empirical evaluation of the **Suspicious Process Finde
 ### Key Findings & Empirical Verdicts
 
 - **Live Tool Blindness Confirmed**: When Diamorphine is active on Kali Linux (`6.12.25-amd64`), userland tools like `chkrootkit` query kernel interfaces via VFS and `/proc`. Diamorphine intercepts `getdents64` (Syscall 217) and unlinks its module from `modules` and decoy processes from `task_struct->tasks`. `chkrootkit` reported **0 rootkits, 0 hidden LKMs, and 0 hidden processes** across 180 inspection categories.
-- **SPF Forensic Detection Rate (100% Precision)**: Under identical threat conditions, SPF offline physical memory analysis (`eval/images/infected/diamorphine.lime`) achieved a **100% detection rate (`1.0`) with 0.0 false positives** on rule-based forensic checks:
+- **SPF Rule Detection on the Diamorphine Image**: Under identical threat conditions, SPF offline physical memory analysis of `eval/images/infected/diamorphine.lime` found **all 4 Diamorphine indicators with 0 rule false positives**:
   - `DKOM_HIDDEN_PROCESS`: Decoy sleeper `PID 3590` detected via `PIDHashTable` cross-check against `PsList`.
   - `HIDDEN_KERNEL_MODULE`: `diamorphine` unlinked module carved and detected at base `0xffffc0b99140` (size: 12,288 bytes).
   - `HOOKED_SYSCALL`: Hooked Syscall 62 (`__x64_sys_kill` -> `0xffffc0b97690`) and Hooked Syscall 217 (`__x64_sys_getdents64` -> `0xffffc0b97350`) flagged outside kernel text and registered modules.
-- **Clean JIT Workload Analysis**: A genuine JIT process (`clean_jit`, PID 4631) allocating 1 MB of anonymous executable memory (`mmap(NULL, 1048576, PROT_READ|PROT_WRITE|PROT_EXEC, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)`) was executed and captured to `baseline/images/clean_jit.lime`. Volatility 3 extracted the anonymous executable region with high fidelity (`unbacked_exec_bytes = 1,048,576.0`, `unbacked_exec_count = 1.0`).
-- **Complementary Dual-Stage Defense**: Rule-based checks (Stage B) produce zero false positives on benign workloads while trapping low-level kernel DKOM and hook anomalies with absolute mathematical certainty. Unsupervised machine learning (Stage C Isolation Forest + TreeSHAP) isolates statistical outliers in process execution space, and TreeSHAP converts high-dimensional feature deviations into human-readable triage sentences for SOC analysts.
+- **Clean JIT Workload Analysis**: A synthetic JIT-style C program (`clean_jit`, PID 4631; not a real Java, Node.js or browser runtime) allocating 1 MB of anonymous executable memory (`mmap(NULL, 1048576, PROT_READ|PROT_WRITE|PROT_EXEC, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)`) was executed and captured to `baseline/images/clean_jit.lime`. Volatility 3 extracted the anonymous executable region with high fidelity (`unbacked_exec_bytes = 1,048,576.0`, `unbacked_exec_count = 1.0`).
+- **Rule Stage Across All Test Images**: Rule-based checks (Stage B) produced zero false positives and found 4 of the 5 ground-truth indicators (80%). The one miss is the userland malware process (PID 5717), which does not modify kernel structures.
+- **ML Stage Did Not Detect Any Malicious Process**: The Isolation Forest (Stage C) detected 0 of the 5 indicators and raised 10 false positives across the 3 test images, all on benign desktop/VM processes. The userland malware scored 0.4719, below the 0.7187 cutoff, so it was not flagged. The main cause is the training baseline: one clean image in which the four security-relevant features (`unbacked_exec_count`, `unbacked_exec_bytes`, `runs_from_tmp_or_shm`, `has_ld_preload`) are always 0, so the model never splits on them (Section 4.5). In this evaluation the rule stage alone was sufficient and the ML stage added no detections.
 
 ---
 
@@ -191,15 +192,17 @@ python -m spf.cli analyse \
 
 ### 3.4 Live Tool vs. Offline Forensic Capability Matrix
 
-| Forensic Dimension | Live Userland Tool (`chkrootkit`) | Live Userland Tool (`rkhunter`) | Offline Forensics Engine (SPF) |
-|---|---|---|---|
-| **Inspection Medium** | Live VFS APIs (`/proc`, `/sys`) | Live VFS APIs (`/proc`, `/sys`) | Raw Physical RAM Image (`.lime` / `.raw`) |
-| **Trust Boundary** | Depends on compromised kernel syscalls | Depends on compromised kernel syscalls | Zero Trust: Out-of-band memory parsing |
-| **DKOM Process Hiding** | **BLIND**: Intercepted by `getdents64` | **BLIND**: Intercepted by `getdents64` | **DETECTED (100%)**: `PIDHashTable` vs `PsList` cross-check |
-| **Hidden Kernel Modules** | **BLIND**: Missing from `/proc/modules` | **BLIND**: Missing from `/sys/module` | **DETECTED (100%)**: Memory carving of unlinked `struct module` |
-| **Syscall Table Hooking** | **BLIND**: Cannot inspect kernel pointers | **BLIND**: Cannot inspect kernel pointers | **DETECTED (100%)**: Address boundary validation vs kernel `.text` |
-| **Tamper Resistance** | Vulnerable to userland/kernel subversion | Vulnerable to userland/kernel subversion | **Immune**: Offline image cannot be altered by malware |
-| **Detection Precision** | 0% on Diamorphine (False Clean) | 0% on Diamorphine (False Clean) | **100% True Positive Rate, 0.0 False Positives** |
+`rkhunter` was not run in this evaluation (no output was captured), so it is not included below.
+
+| Forensic Dimension | Live Userland Tool (`chkrootkit`) | Offline Forensics Engine (SPF) |
+|---|---|---|
+| **Inspection Medium** | Live VFS APIs (`/proc`, `/sys`) | Raw Physical RAM Image (`.lime` / `.raw`) |
+| **Trust Boundary** | Depends on compromised kernel syscalls | Out-of-band memory parsing |
+| **DKOM Process Hiding** | **MISSED**: Intercepted by `getdents64` | **DETECTED**: `PIDHashTable` vs `PsList` cross-check |
+| **Hidden Kernel Modules** | **MISSED**: Missing from `/proc/modules` | **DETECTED**: Memory carving of unlinked `struct module` |
+| **Syscall Table Hooking** | **MISSED**: Cannot inspect kernel pointers | **DETECTED**: Address boundary validation vs kernel `.text` |
+| **Tamper Resistance** | Vulnerable to userland/kernel subversion | Image cannot be altered by the malware once captured |
+| **Result on `diamorphine.lime`** | 0 of 4 indicators (reported clean) | **4 of 4 indicators, 0 rule false positives** (one infected image; the ML stage added 3 false positives) |
 
 
 
@@ -392,7 +395,7 @@ TreeSHAP Contributions for clean_jit:
 ```
 
 #### Generated Plain Language Triage Explanation
-When `clean_jit` is evaluated by `spf.explain.shap_explainer.explain()`, SPF identifies the elevated features above the clean baseline mean:
+`clean_jit` is below the cutoff, so it does **not** appear in SPF's report. The sentence below was produced by calling `spf.explain.shap_explainer.explain()` on it directly. Because TreeSHAP gives the unbacked-executable features a contribution of exactly 0, the sentence comes from the baseline-deviation fallback (features above the clean baseline mean), not from TreeSHAP. The word "Flagged" is the explainer's fixed wording; the process was not flagged:
 ```
 Flagged due to 1 executable memory region(s) unbacked by disk files; a large amount of executable memory unbacked by disk files.
 ```
@@ -412,7 +415,7 @@ An architectural audit of the 100 decision trees comprising `baseline/models/spf
 **Reasoning**:
 The 230 processes in `clean_01.lime` contained zero unbacked executable allocations (`min == max == 0.0`). Scikit-learn's `IsolationForest` chooses splits uniformly at random between the minimum and maximum values of a feature on the subsample. When a feature has zero variance across the training set, no split threshold can be generated.
 
-Consequently, `clean_jit`'s overall score (`0.4117`) is governed by its small structural metrics (`vma_count=18`, `anon_to_file_ratio=0.67`, `fd_count=3`), making it appear normal to the forest despite the 1 MB executable allocation. However, SPF's explainer engine incorporates **baseline-deviation attribution**, ensuring that whenever unbacked executable memory appears, it is highlighted in plain English for human operators.
+Consequently, `clean_jit`'s overall score (`0.4117`) is governed by its small structural metrics (`vma_count=18`, `anon_to_file_ratio=0.67`, `fd_count=3`), making it appear normal to the forest despite the 1 MB executable allocation. The baseline-deviation explanation above only appears if an analyst explains the process manually; the report does not surface it, because explanations are generated only for processes above the cutoff.
 
 ---
 
@@ -440,21 +443,27 @@ LD_PRELOAD=/dev/shm/libhook.so nohup /dev/shm/malicious_agent > /dev/shm/agent.l
 - `socket_count`: **`1.0`** (Listening socket bound on `0.0.0.0:44444`)
 - `vma_count`: `22.0` | `fd_count`: `4.0` | `anon_to_file_ratio`: `1.1`
 
-#### Plain-Language Triage Output (TreeSHAP)
+#### Isolation Forest Score
+- **Anomaly Score**: `0.4719`
+- **Baseline Threshold**: `0.7187`
+- **Result**: **Not flagged** (`0.4719 < 0.7187`). PID 5717 does not appear in `userland_malware.json` (Appendix D); that report lists only 4 benign desktop/VM processes.
+
+#### Plain-Language Explanation (manual call, baseline-deviation fallback)
+Produced by calling `explain()` on PID 5717 directly. As with `clean_jit`, `runs_from_tmp_or_shm` and `has_ld_preload` have zero variance in the training data and receive no TreeSHAP contribution, so this sentence comes from the baseline-deviation fallback:
 ```text
 "Flagged due to execution from /tmp or /dev/shm; LD_PRELOAD set in its environment."
 ```
 
 #### Analytical Verdict & Architectural Synthesis
 - **Kernel vs. Userland Evasion Dichotomy**:
-  - Diamorphine manipulates kernel pointers and unlinks `task_struct`, blinding `pslist` and userland ML models (Stage C), but is trapped with **100% precision** by Stage B deterministic kernel rules.
-  - Userland malware (`PID 5717`) leaves kernel structures unmodified, yielding 0 rule findings in Stage B, but exhibits distinct execution path (`/dev/shm`) and environment tampering (`LD_PRELOAD`), which Stage D explainability flags in plain language for human triage.
+  - Diamorphine manipulates kernel pointers and unlinks `task_struct`, blinding `pslist` and userland ML models (Stage C), but all 4 of its indicators were found by Stage B deterministic kernel rules, with no rule false positives.
+  - Userland malware (`PID 5717`) leaves kernel structures unmodified, yielding 0 rule findings in Stage B. It has a distinct execution path (`/dev/shm`) and environment tampering (`LD_PRELOAD`), but the Isolation Forest scored it below the cutoff, so **SPF did not detect it in either stage**. Its explanation is only available when an analyst runs `explain()` on it manually.
 
 ---
 
 ### 4.7 Exhaustive Audit of ML False Positives
 
-Across the evaluation dataset, the Isolation Forest model flagged 6 statistical outliers across benign background desktop daemons. An exhaustive audit was performed on each anomaly:
+Across the 3 test images, the Isolation Forest flagged **10** processes, matching the 10 ML false positives in `eval/results/metrics.json`. None is malicious. They are 3 benign programs (`wireplumber`, `lightdm-gtk-greeter`, `vmware-vmblock-fuse`) recurring across images, plus a second `wireplumber` instance in `userland_malware.lime`:
 
 | # | Target Image | PID | Process (`comm`) | Score | Cutoff | Attribution Method | Plain-Language Explanation Text | Dominant Feature Deviations |
 |:---:|---|:---:|---|:---:|:---:|:---:|---|---|
@@ -464,12 +473,16 @@ Across the evaluation dataset, the Isolation Forest model flagged 6 statistical 
 | 4 | `clean_jit.lime` | 1383 | `wireplumber` | **0.7977** | 0.7187 | **TreeSHAP** | *"Flagged due to an unusual number of open sockets; an unusual number of open file descriptors; an unusually high number of memory regions."* | `vma_count=836.0`, `fd_count=264.0`, `socket_count=96.0` |
 | 5 | `clean_jit.lime` | 1385 | `lightdm-gtk-gre` | **0.7257** | 0.7187 | **TreeSHAP** | *"Flagged due to a UID different from its parent process; an unusually high number of memory regions; an unusual number of open file descriptors."* | `vma_count=620.0`, `fd_count=100.0`, `uid_differs_from_parent=1.0` |
 | 6 | `clean_jit.lime` | 681 | `vmware-vmblock-` | **0.7198** | 0.7187 | **TreeSHAP** | *"Flagged due to an unusually high ratio of anonymous memory; an unusual number of open file descriptors."* | `anon_to_file_ratio=59.55`, `fd_count=12.0` |
+| 7 | `userland_malware.lime` | 1383 | `wireplumber` | **0.7977** | 0.7187 | Not recorded | *"Flagged due to an unusual number of open sockets; an unusual number of open file descriptors; an unusually high number of memory regions."* | Not recorded (see Appendix D) |
+| 8 | `userland_malware.lime` | 5684 | `wireplumber` | **0.7413** | 0.7187 | Not recorded | *"Flagged due to an unusual number of open file descriptors; an unusually high number of memory regions; an unusual number of open sockets."* | Not recorded (see Appendix D) |
+| 9 | `userland_malware.lime` | 1385 | `lightdm-gtk-gre` | **0.7257** | 0.7187 | Not recorded | *"Flagged due to a UID different from its parent process; an unusually high number of memory regions; an unusual number of open file descriptors."* | Not recorded (see Appendix D) |
+| 10 | `userland_malware.lime` | 681 | `vmware-vmblock-` | **0.7198** | 0.7187 | Not recorded | *"Flagged due to an unusually high ratio of anonymous memory; an unusual number of open file descriptors."* | Not recorded (see Appendix D) |
 
 #### Forensic Root-Cause Analysis of Benign Outliers
 1. **Desktop Audio/Video Pipelines (`wireplumber`)**: WirePlumber manages PipeWire multimedia nodes via hundreds of Unix domain sockets and shared memory buffers (`socket_count=96`, `fd_count=264`, `vma_count=836`), placing it far in the tail of the baseline distribution.
 2. **Display Display Managers (`lightdm-gtk-greeter`)**: Spawns under user `lightdm` (UID 114) from parent `lightdm` daemon running as `root` (UID 0), tripping `uid_differs_from_parent=1.0` alongside heavy GTK UI libraries (`vma_count=620`).
 3. **Virtualization Hypervisor Daemons (`vmware-vmblock-fuse`)**: Implements FUSE filesystem bridging between host and guest, resulting in an extreme anonymous-to-file ratio (`59.55`).
-4. **Attribution Engine Confirmation**: All 6 anomalies were successfully attributed by exact **TreeSHAP** (`shap.TreeExplainer`), verifying that the fallback baseline-deviation mechanism was not required.
+4. **Attribution Engine Confirmation**: Anomalies 1–6 were attributed by exact **TreeSHAP** (`shap.TreeExplainer`), without the baseline-deviation fallback. The attribution method for anomalies 7–10 was not recorded.
 
 ---
 
@@ -509,23 +522,23 @@ The evaluation scores detections across three distinct forensic tiers:
 | Target Workload / Scenario | Memory Image | Stage B (Rules Engine) Findings | Stage C (Isolation Forest) Findings | SPF Final Triage Verdict |
 |---|---|---|---|---|
 | **Clean JIT Workload** | `clean_jit.lime` | 0 findings (No kernel tampering) | Score = 0.4117 (below cutoff 0.7187)<br>TreeSHAP explains 1 MB unbacked executable memory | **BENIGN COMPLEX PROCESS**<br>No false rootkit alerts; unbacked executable RAM explicitly characterized |
-| **Diamorphine Rootkit Attack** | `diamorphine.lime` | 4 CRITICAL findings:<br>• `DKOM_HIDDEN_PROCESS` (PID 3590)<br>• `HIDDEN_KERNEL_MODULE` (`diamorphine`)<br>• `HOOKED_SYSCALL` (Syscall 62)<br>• `HOOKED_SYSCALL` (Syscall 217) | 3 statistical outliers (`wireplumber`, `lightdm`, `vmware-vmblock`) | **INFECTED (100% Precision)**<br>Deterministic rootkit indicators separated from statistical outliers |
-| **Userland Covert Malware** | `userland_malware.lime` | 0 findings (No kernel hooks) | Score = 0.4719 (below cutoff 0.7187)<br>TreeSHAP explains `/dev/shm` + `LD_PRELOAD` | **INVESTIGATIVE SUSPICIOUS PROCESS**<br>Flagged for human triage due to execution path and environment injection |
+| **Diamorphine Rootkit Attack** | `diamorphine.lime` | 4 CRITICAL findings:<br>• `DKOM_HIDDEN_PROCESS` (PID 3590)<br>• `HIDDEN_KERNEL_MODULE` (`diamorphine`)<br>• `HOOKED_SYSCALL` (Syscall 62)<br>• `HOOKED_SYSCALL` (Syscall 217) | 3 statistical outliers (`wireplumber`, `lightdm`, `vmware-vmblock`), all false positives | **INFECTED**<br>All 4 rootkit indicators found by the rule stage; the ML stage added 3 false positives and no detections |
+| **Userland Covert Malware** | `userland_malware.lime` | 0 findings (No kernel hooks) | Score = 0.4719 (below cutoff 0.7187), not flagged<br>4 other processes flagged, all false positives | **MISSED**<br>Not detected by either stage; `/dev/shm` + `LD_PRELOAD` are only explained if `explain()` is run manually |
 
 ---
 
 ## 6. Forensic Discussion & Methodological Recommendations
 
 ### 6.1 Dual-Stage Complementarity
-The evaluation demonstrates the complementary design of SPF:
-1. **Stage B (Structural Integrity Checks)**: Deterministic, high-confidence rules operating on kernel objects (`task_struct`, `sys_call_table`, `modules`). Bypasses kernel hooks and detects advanced evasion with zero false positives.
-2. **Stage C (Behavioral Anomaly Detection)**: Statistical modeling of userland process execution characteristics. Flags anomalous process behaviors (such as injected memory, privilege discrepancies, or abnormal descriptor loads).
+SPF was designed so the two stages complement each other. In this evaluation only the rule stage contributed detections:
+1. **Stage B (Structural Integrity Checks)**: Deterministic rules operating on kernel objects (`task_struct`, `sys_call_table`, `modules`). Found all 3 kernel-level Diamorphine indicators and the DKOM-hidden process, with zero false positives across the 3 test images.
+2. **Stage C (Behavioral Anomaly Detection)**: Intended to flag unusual userland process behaviour (such as injected memory, privilege discrepancies, or abnormal descriptor loads). With the current single-image baseline it flagged only benign desktop/VM processes (10 false positives) and missed the userland malware, because the injection-related features have zero variance in training (Section 4.5). So, for the proposal's question of whether the ML stage catches threats the rules miss: with this baseline, it does not.
 
 ### 6.2 Mitigating Zero-Variance Baseline Limitations
 To enable Isolation Forest decision trees to split on `unbacked_exec_bytes` and `unbacked_exec_count`, training sets should incorporate multi-modal baseline distributions, including legitimate JIT workloads (Node.js runtimes, Chromium browser tabs, and JVM daemons). This ensures the decision trees learn split boundaries distinguishing standard JIT allocations from malicious injected shellcode.
 
 ### 6.3 SOC Operational Impact of TreeSHAP
-By transforming raw feature contribution vectors into actionable English sentences (e.g., *"Flagged due to 1 executable memory region(s) unbacked by disk files; a large amount of executable memory unbacked by disk files"*), SPF significantly reduces analyst fatigue and accelerates incident triage in high-velocity Security Operations Centers (SOCs).
+For every flagged process, SPF turns feature contributions into a plain-English sentence (e.g., *"Flagged due to an unusually high ratio of anonymous memory; an unusual number of open file descriptors"* for `vmware-vmblock-fuse`). These sentences made it straightforward to identify all 10 ML alerts as benign desktop/VM behaviour (Section 4.7). Whether this reduces analyst workload in practice was not measured in this evaluation.
 
 ---
 
@@ -759,5 +772,5 @@ Checking `OSX_RSPLUG'...                                    not tested
 
 ### Appendix E: Diamorphine Patch & Build Reference
 The exact DKOM unlinking patch and kernel build instructions are committed to the repository under `eval/malware_notes/`:
-- **Patch Diff**: [`eval/malware_notes/diamorphine.patch`](file:///c:/GithubProj/Suspicious-Process-Finder/eval/malware_notes/diamorphine.patch)
-- **Setup & Execution Guide**: [`eval/malware_notes/setup_and_execution.md`](file:///c:/GithubProj/Suspicious-Process-Finder/eval/malware_notes/setup_and_execution.md)
+- **Patch Diff**: [`eval/malware_notes/diamorphine.patch`](../eval/malware_notes/diamorphine.patch)
+- **Setup & Execution Guide**: [`eval/malware_notes/setup_and_execution.md`](../eval/malware_notes/setup_and_execution.md)
