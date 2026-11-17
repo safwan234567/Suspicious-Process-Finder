@@ -1,32 +1,240 @@
 {
-  "rules": {
-    "tp": 1,
-    "fp": 0,
-    "malicious_total": 1,
-    "runtime_s": 1041.7206973000066,
-    "images": 2,
-    "detection_rate": 1.0,
-    "false_positives_per_image": 0.0,
-    "avg_runtime_s": 520.86
+  "summary": {
+    "rules": {
+      "process_level": {
+        "tp": 1,
+        "fp": 0,
+        "malicious_total": 2,
+        "detection_rate": 0.5,
+        "fp_per_image": 0.0
+      },
+      "kernel_rootkit_level": {
+        "tp": 3,
+        "fp": 0,
+        "malicious_total": 3,
+        "detection_rate": 1.0,
+        "fp_per_image": 0.0
+      },
+      "overall_indicators": {
+        "tp": 4,
+        "fp": 0,
+        "malicious_total": 5,
+        "detection_rate": 0.8,
+        "fp_per_image": 0.0
+      },
+      "avg_runtime_s": 521.4,
+      "total_images": 3
+    },
+    "ml": {
+      "process_level": {
+        "tp": 0,
+        "fp": 10,
+        "malicious_total": 2,
+        "detection_rate": 0.0,
+        "fp_per_image": 3.3333
+      },
+      "kernel_rootkit_level": {
+        "tp": 0,
+        "fp": 0,
+        "malicious_total": 3,
+        "detection_rate": 0.0,
+        "fp_per_image": 0.0
+      },
+      "overall_indicators": {
+        "tp": 0,
+        "fp": 10,
+        "malicious_total": 5,
+        "detection_rate": 0.0,
+        "fp_per_image": 3.3333
+      },
+      "avg_runtime_s": 521.9,
+      "total_images": 3
+    },
+    "both": {
+      "process_level": {
+        "tp": 1,
+        "fp": 10,
+        "malicious_total": 2,
+        "detection_rate": 0.5,
+        "fp_per_image": 3.3333
+      },
+      "kernel_rootkit_level": {
+        "tp": 3,
+        "fp": 0,
+        "malicious_total": 3,
+        "detection_rate": 1.0,
+        "fp_per_image": 0.0
+      },
+      "overall_indicators": {
+        "tp": 4,
+        "fp": 10,
+        "malicious_total": 5,
+        "detection_rate": 0.8,
+        "fp_per_image": 3.3333
+      },
+      "avg_runtime_s": 521.9,
+      "total_images": 3
+    }
   },
-  "ml": {
-    "tp": 0,
-    "fp": 6,
-    "malicious_total": 1,
-    "runtime_s": 1046.5991932000106,
-    "images": 2,
-    "detection_rate": 0.0,
-    "false_positives_per_image": 3.0,
-    "avg_runtime_s": 523.3
-  },
-  "both": {
-    "tp": 1,
-    "fp": 6,
-    "malicious_total": 1,
-    "runtime_s": 1046.0536104999992,
-    "images": 2,
-    "detection_rate": 1.0,
-    "false_positives_per_image": 3.0,
-    "avg_runtime_s": 523.027
-  }
+  "per_image": [
+    {
+      "image": "baseline/images/clean_jit.lime",
+      "ground_truth": {
+        "malicious_pids": [],
+        "hidden_modules": [],
+        "hooked_syscalls": []
+      },
+      "detections": {
+        "rules": {
+          "detected_pids": [],
+          "detected_modules": [],
+          "detected_syscalls": [],
+          "pid_tp": 0,
+          "pid_fp": 0,
+          "kernel_tp": 0,
+          "kernel_fp": 0
+        },
+        "ml": {
+          "detected_pids": [
+            681,
+            1383,
+            1385
+          ],
+          "detected_modules": [],
+          "detected_syscalls": [],
+          "pid_tp": 0,
+          "pid_fp": 3,
+          "kernel_tp": 0,
+          "kernel_fp": 0
+        },
+        "both": {
+          "detected_pids": [
+            681,
+            1383,
+            1385
+          ],
+          "detected_modules": [],
+          "detected_syscalls": [],
+          "pid_tp": 0,
+          "pid_fp": 3,
+          "kernel_tp": 0,
+          "kernel_fp": 0
+        }
+      }
+    },
+    {
+      "image": "eval/images/infected/diamorphine.lime",
+      "ground_truth": {
+        "malicious_pids": [
+          3590
+        ],
+        "hidden_modules": [
+          "diamorphine"
+        ],
+        "hooked_syscalls": [
+          "__x64_sys_getdents64",
+          "__x64_sys_kill"
+        ]
+      },
+      "detections": {
+        "rules": {
+          "detected_pids": [
+            3590
+          ],
+          "detected_modules": [
+            "diamorphine"
+          ],
+          "detected_syscalls": [
+            "__x64_sys_getdents64",
+            "__x64_sys_kill"
+          ],
+          "pid_tp": 1,
+          "pid_fp": 0,
+          "kernel_tp": 3,
+          "kernel_fp": 0
+        },
+        "ml": {
+          "detected_pids": [
+            778,
+            1215,
+            1216
+          ],
+          "detected_modules": [],
+          "detected_syscalls": [],
+          "pid_tp": 0,
+          "pid_fp": 3,
+          "kernel_tp": 0,
+          "kernel_fp": 0
+        },
+        "both": {
+          "detected_pids": [
+            778,
+            1215,
+            1216,
+            3590
+          ],
+          "detected_modules": [
+            "diamorphine"
+          ],
+          "detected_syscalls": [
+            "__x64_sys_getdents64",
+            "__x64_sys_kill"
+          ],
+          "pid_tp": 1,
+          "pid_fp": 3,
+          "kernel_tp": 3,
+          "kernel_fp": 0
+        }
+      }
+    },
+    {
+      "image": "eval/images/infected/userland_malware.lime",
+      "ground_truth": {
+        "malicious_pids": [
+          5717
+        ],
+        "hidden_modules": [],
+        "hooked_syscalls": []
+      },
+      "detections": {
+        "rules": {
+          "detected_pids": [],
+          "detected_modules": [],
+          "detected_syscalls": [],
+          "pid_tp": 0,
+          "pid_fp": 0,
+          "kernel_tp": 0,
+          "kernel_fp": 0
+        },
+        "ml": {
+          "detected_pids": [
+            681,
+            1383,
+            1385,
+            5684
+          ],
+          "detected_modules": [],
+          "detected_syscalls": [],
+          "pid_tp": 0,
+          "pid_fp": 4,
+          "kernel_tp": 0,
+          "kernel_fp": 0
+        },
+        "both": {
+          "detected_pids": [
+            681,
+            1383,
+            1385,
+            5684
+          ],
+          "detected_modules": [],
+          "detected_syscalls": [],
+          "pid_tp": 0,
+          "pid_fp": 4,
+          "kernel_tp": 0,
+          "kernel_fp": 0
+        }
+      }
+    }
+  ]
 }

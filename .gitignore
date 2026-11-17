@@ -21,6 +21,8 @@ eval/results/*
 !eval/results/infected_both.json
 !eval/results/infected_both.html
 !eval/results/chkrootkit_live_output.txt
+!eval/results/userland_malware.json
+!eval/results/userland_malware.html
 report*.json
 report*.html
 
