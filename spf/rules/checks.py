@@ -6,6 +6,8 @@ certainty and kept separate from anomaly scores.
 
 from __future__ import annotations
 
+import sys
+
 from spf.models import MemoryEvidence, RuleFinding
 
 
@@ -37,7 +39,15 @@ def check_hidden_modules(ev: MemoryEvidence) -> list[RuleFinding]:
 
 
 def check_syscall_hooks(ev: MemoryEvidence) -> list[RuleFinding]:
-    """Syscall table entry pointing outside kernel code and every registered module."""
+    """Syscall table entry pointing outside kernel code and every registered module.
+
+    Skipped (returns no findings) when the kernel code range is unknown or
+    invalid: without it every syscall would look hooked."""
+    if ev.kernel_text is None or ev.kernel_text[1] <= ev.kernel_text[0]:
+        sys.stderr.write(
+            "[spf.rules] WARNING: kernel code range unknown; HOOKED_SYSCALL check skipped.\n"
+        )
+        return []
     k_start, k_end = ev.kernel_text
     ranges = [(m.base, m.base + m.size) for m in ev.registered_modules]
 

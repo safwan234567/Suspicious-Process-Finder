@@ -137,11 +137,10 @@ def _safe(image_path: str, symbols_dir, plugin_name: str) -> list[dict]:
         return []
 
 
-def _kernel_text(ctx) -> tuple[int, int]:
-    """Best-effort (start, end) of the kernel code section, needed by the
-    hooked-syscall rule. Tries common kernel symbols; returns (0, 0) if it
-    cannot resolve them (in which case confirm manually before trusting the
-    syscall-hook rule, since (0, 0) would over-flag)."""
+def _kernel_text(ctx) -> tuple[int, int] | None:
+    """(start, end) of the kernel code section, needed by the hooked-syscall
+    rule. Tries common kernel symbols. Returns None and prints a warning if
+    none resolve, so the rule is skipped instead of flagging every syscall."""
     try:
         kernel = ctx.modules[next(iter(ctx.modules))]
         for lo, hi in (("_stext", "_etext"), ("_text", "_end")):
@@ -154,7 +153,12 @@ def _kernel_text(ctx) -> tuple[int, int]:
                 continue
     except Exception:
         pass
-    return (0, 0)  # TODO confirm against the image if syscall-hook results look noisy
+    sys.stderr.write(
+        "[spf.extraction] WARNING: could not resolve the kernel code range "
+        "(_stext/_etext or _text/_end). The hooked-syscall rule will be skipped "
+        "for this image. Check that the symbol table matches the image's kernel.\n"
+    )
+    return None
 
 
 def extract(image_path: str | Path, symbols_dir: str | Path) -> MemoryEvidence:

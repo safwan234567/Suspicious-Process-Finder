@@ -60,7 +60,7 @@ class MemoryEvidence:
     registered_modules: list[KernelModule]    # modules in the registered module list
     memory_modules: list[KernelModule]        # modules found in memory
     syscall_table: list[SyscallEntry]
-    kernel_text: tuple[int, int] = (0, 0)     # (start, end) of kernel code
+    kernel_text: tuple[int, int] | None = None  # (start, end) of kernel code; None = unknown
 
 
 @dataclass

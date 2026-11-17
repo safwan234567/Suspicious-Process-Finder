@@ -20,6 +20,16 @@ def evidence(**overrides) -> MemoryEvidence:
     return MemoryEvidence(**base)
 
 
+def test_unknown_kernel_range_skips_syscall_rule():
+    table = [SyscallEntry(0, 0xFFFF0100, "sys_read"), SyscallEntry(62, 0xDEAD0000, None)]
+    assert check_syscall_hooks(evidence(kernel_text=None, syscall_table=table)) == []
+
+
+def test_invalid_kernel_range_skips_syscall_rule():
+    table = [SyscallEntry(0, 0xFFFF0100, "sys_read")]
+    assert check_syscall_hooks(evidence(kernel_text=(0, 0), syscall_table=table)) == []
+
+
 def test_clean_image_has_no_findings():
     assert run_rules(evidence()) == []
 
