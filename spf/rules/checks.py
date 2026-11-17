@@ -41,10 +41,10 @@ def check_syscall_hooks(ev: MemoryEvidence) -> list[RuleFinding]:
     k_start, k_end = ev.kernel_text
     ranges = [(m.base, m.base + m.size) for m in ev.registered_modules]
 
-    def is_legit(addr: int) -> bool:
-        if k_start <= addr < k_end:
+    def is_legit(e: SyscallEntry) -> bool:
+        if k_start <= e.address < k_end:
             return True
-        return any(lo <= addr < hi for lo, hi in ranges)
+        return e.symbol is not None and any(lo <= e.address < hi for lo, hi in ranges)
 
     return [
         RuleFinding(
@@ -53,7 +53,7 @@ def check_syscall_hooks(ev: MemoryEvidence) -> list[RuleFinding]:
             evidence={"index": e.index, "address": e.address, "symbol": e.symbol},
         )
         for e in ev.syscall_table
-        if not is_legit(e.address)
+        if not is_legit(e)
     ]
 
 

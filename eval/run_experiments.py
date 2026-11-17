@@ -48,11 +48,13 @@ def evaluate(symbols: str, model_path: str | None, gt_path: str, out_path: str) 
     for entry in images:
         image = entry["image"]
         malicious = set(entry.get("malicious_pids", []))
+        t_ext0 = time.perf_counter()
+        ev = extract(image, symbols)
+        t_ext = time.perf_counter() - t_ext0
         for cfg in CONFIGURATIONS:
             t0 = time.perf_counter()
-            ev = extract(image, symbols)
             detected = _detected_pids(ev, model, cfg)
-            dt = time.perf_counter() - t0
+            dt = t_ext + (time.perf_counter() - t0)
             r = results[cfg]
             r["tp"] += len(detected & malicious)
             r["fp"] += len(detected - malicious)

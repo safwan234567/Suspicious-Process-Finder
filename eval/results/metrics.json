@@ -1,0 +1,32 @@
+{
+  "rules": {
+    "tp": 1,
+    "fp": 0,
+    "malicious_total": 1,
+    "runtime_s": 1041.7206973000066,
+    "images": 2,
+    "detection_rate": 1.0,
+    "false_positives_per_image": 0.0,
+    "avg_runtime_s": 520.86
+  },
+  "ml": {
+    "tp": 0,
+    "fp": 6,
+    "malicious_total": 1,
+    "runtime_s": 1046.5991932000106,
+    "images": 2,
+    "detection_rate": 0.0,
+    "false_positives_per_image": 3.0,
+    "avg_runtime_s": 523.3
+  },
+  "both": {
+    "tp": 1,
+    "fp": 6,
+    "malicious_total": 1,
+    "runtime_s": 1046.0536104999992,
+    "images": 2,
+    "detection_rate": 1.0,
+    "false_positives_per_image": 3.0,
+    "avg_runtime_s": 523.027
+  }
+}

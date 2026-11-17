@@ -1,3 +1,6 @@
+# Binaries and executables
+*.exe
+
 # Memory images and symbol tables (too large for git)
 *.raw
 *.lime
@@ -12,6 +15,7 @@ baseline/models/*
 !baseline/models/.gitkeep
 eval/results/*
 !eval/results/.gitkeep
+!eval/results/metrics.json
 report*.json
 report*.html
 

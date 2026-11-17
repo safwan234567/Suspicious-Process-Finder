@@ -1,10 +1,14 @@
-# Record every malicious artefact in each infected image.
-# Example entry:
-#
-# - image: infected/diamorphine_01.lime
-#   rootkit: Diamorphine
-#   hidden_pids: [1337]
-#   hidden_modules: [diamorphine]
-#   hooked_syscalls: [kill, getdents, getdents64]
-#   malicious_pids: [1337]
-images: []
+images:
+  - image: baseline/images/clean_01.lime
+    rootkit: None
+    hidden_pids: []
+    hidden_modules: []
+    hooked_syscalls: []
+    malicious_pids: []
+
+  - image: eval/images/infected/diamorphine.lime
+    rootkit: Diamorphine
+    hidden_pids: [3590]
+    hidden_modules: [diamorphine]
+    hooked_syscalls: [__x64_sys_kill, __x64_sys_getdents64]
+    malicious_pids: [3590]

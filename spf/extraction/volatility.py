@@ -60,18 +60,28 @@ def build_context(image_path: str, symbols_dir) -> object:
     """Build one Volatility context for an image. The layers are stacked lazily
     on the first plugin run and then reused, so all plugins in extract() share
     the single expensive scan instead of repeating it."""
+    try:
+        import volatility3.framework.symbols.linux.extensions.network  # noqa: F401
+    except ImportError:
+        pass
     import volatility3.symbols
+    import volatility3.framework.layers
     from volatility3 import framework, plugins
-    from volatility3.framework import contexts
+    from volatility3.framework import contexts, automagic
+    from volatility3.framework.configuration import requirements
 
     framework.import_files(plugins, True)
+    framework.import_files(volatility3.framework.layers)
+    framework.import_files(automagic)
     if symbols_dir:
         sp = str(Path(symbols_dir).resolve())
         if sp not in volatility3.symbols.__path__:
             volatility3.symbols.__path__ = [sp] + list(volatility3.symbols.__path__)
 
     ctx = contexts.Context()
-    ctx.config["automagic.LayerStacker.single_location"] = "file://" + str(Path(image_path).resolve())
+    ctx.config["automagic.LayerStacker.single_location"] = requirements.URIRequirement.location_from_file(
+        str(Path(image_path).resolve())
+    )
     return ctx
 
 
@@ -190,7 +200,7 @@ def extract(image_path: str | Path, symbols_dir: str | Path) -> MemoryEvidence:
     exe_by_pid: dict[int, str] = {}
     for r in psaux:
         pid = _int(_col(r, "PID", "Pid"))
-        args = str(_col(r, "Args", "COMM", "Command", default=""))
+        args = str(_col(r, "ARGS", "Args", "COMM", "Command", default=""))
         cmd_by_pid[pid] = args
         exe_by_pid[pid] = args.split()[0] if args else ""
 
@@ -224,17 +234,17 @@ def extract(image_path: str | Path, symbols_dir: str | Path) -> MemoryEvidence:
 
     registered_modules = [
         KernelModule(
-            name=str(_col(r, "Name", "Module", default="?")),
-            base=_int(_col(r, "Address", "Offset", "Base")),
-            size=_int(_col(r, "Size")),
+            name=str(_col(r, "Module Name", "Name", "Module", default="?")),
+            base=_int(_col(r, "Offset", "Address", "Base")),
+            size=_int(_col(r, "Code Size", "Size")),
         )
         for r in lsmod
     ]
     hidden_modules = [
         KernelModule(
-            name=str(_col(r, "Name", "Module", default="?")),
-            base=_int(_col(r, "Address", "Offset", "Base")),
-            size=_int(_col(r, "Size")),
+            name=str(_col(r, "Module Name", "Name", "Module", default="?")),
+            base=_int(_col(r, "Offset", "Address", "Base")),
+            size=_int(_col(r, "Code Size", "Size")),
         )
         for r in hidden
     ]
