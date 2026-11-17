@@ -38,6 +38,8 @@ from spf.models import (
     VMA,
 )
 
+from spf.rules.checks import HIDDEN_MODULES_PLUGIN, PIDHASH_PLUGIN, SYSCALL_PLUGIN
+
 SUPPORTED_FORMATS = {".raw", ".lime"}
 
 
@@ -126,14 +128,16 @@ def _run_plugin(image_path: str, symbols_dir, plugin_name: str) -> tuple[list[di
     return run_plugin(ctx, plugin_name), ctx
 
 
-def _safe(image_path: str, symbols_dir, plugin_name: str) -> list[dict]:
+def _safe(image_path: str, symbols_dir, plugin_name: str, failed: list[str]) -> list[dict]:
     """Run one plugin and return its rows, or [] if it fails, so one bad plugin
-    does not abort the whole extraction."""
+    does not abort the whole extraction. Failed plugins are appended to
+    `failed` so the report can say which checks were affected."""
     try:
         rows, _ = _run_plugin(image_path, symbols_dir, plugin_name)
         return rows
     except Exception as exc:  # noqa: BLE001
         sys.stderr.write(f"[spf.extraction] {plugin_name} skipped: {exc!r}\n")
+        failed.append(plugin_name)
         return []
 
 
@@ -168,16 +172,24 @@ def extract(image_path: str | Path, symbols_dir: str | Path) -> MemoryEvidence:
 
     # One fresh context per plugin (see _run_plugin docstring). Each plugin is
     # wrapped so a single failure skips that plugin instead of aborting.
+    failed: list[str] = []
     pslist, ctx = _run_plugin(image_path, symbols_dir, "linux.pslist.PsList")
-    maps = _safe(image_path, symbols_dir, "linux.proc.Maps")
-    lsof = _safe(image_path, symbols_dir, "linux.lsof.Lsof")
-    sockstat = _safe(image_path, symbols_dir, "linux.sockstat.Sockstat")
-    psaux = _safe(image_path, symbols_dir, "linux.psaux.PsAux")
-    envars = _safe(image_path, symbols_dir, "linux.envars.Envars")
-    lsmod = _safe(image_path, symbols_dir, "linux.lsmod.Lsmod")
-    syscalls = _safe(image_path, symbols_dir, "linux.malware.check_syscall.Check_syscall")
-    pidhash = _safe(image_path, symbols_dir, "linux.pidhashtable.PIDHashTable")
-    hidden = _safe(image_path, symbols_dir, "linux.malware.hidden_modules.Hidden_modules")
+    maps = _safe(image_path, symbols_dir, "linux.proc.Maps", failed)
+    lsof = _safe(image_path, symbols_dir, "linux.lsof.Lsof", failed)
+    sockstat = _safe(image_path, symbols_dir, "linux.sockstat.Sockstat", failed)
+    psaux = _safe(image_path, symbols_dir, "linux.psaux.PsAux", failed)
+    envars = _safe(image_path, symbols_dir, "linux.envars.Envars", failed)
+    lsmod = _safe(image_path, symbols_dir, "linux.lsmod.Lsmod", failed)
+    syscalls = _safe(image_path, symbols_dir, SYSCALL_PLUGIN, failed)
+    pidhash = _safe(image_path, symbols_dir, PIDHASH_PLUGIN, failed)
+    hidden = _safe(image_path, symbols_dir, HIDDEN_MODULES_PLUGIN, failed)
+
+    # A live kernel always has PIDs and syscall entries, so an empty result
+    # means the plugin did not work even if it raised no error.
+    for name, rows in ((PIDHASH_PLUGIN, pidhash), (SYSCALL_PLUGIN, syscalls)):
+        if not rows and name not in failed:
+            sys.stderr.write(f"[spf.extraction] {name} returned no rows; treating it as unavailable\n")
+            failed.append(name)
 
     # --- per-pid VMAs ---
     vmas_by_pid: dict[int, list[VMA]] = {}
@@ -234,7 +246,9 @@ def extract(image_path: str | Path, symbols_dir: str | Path) -> MemoryEvidence:
             sockets=sockets_by_pid.get(pid, []),
         ))
 
-    pid_hash_pids = {_int(_col(r, "PID", "Pid")) for r in pidhash} or {p.pid for p in tasks}
+    # No fallback to the task list: comparing the task list with itself would
+    # make the DKOM rule silently blind. None tells the rule to skip instead.
+    pid_hash_pids = {_int(_col(r, "PID", "Pid")) for r in pidhash} if pidhash else None
 
     registered_modules = [
         KernelModule(
@@ -272,4 +286,5 @@ def extract(image_path: str | Path, symbols_dir: str | Path) -> MemoryEvidence:
         memory_modules=memory_modules,
         syscall_table=syscall_table,
         kernel_text=_kernel_text(ctx),
+        unavailable_plugins=failed,
     )
