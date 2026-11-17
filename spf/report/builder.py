@@ -15,6 +15,7 @@ import html
 from pathlib import Path
 
 from spf.models import AnomalyFinding, MemoryEvidence, RuleFinding
+from spf.rules.checks import skipped_checks
 
 
 def build_report(
@@ -29,13 +30,16 @@ def build_report(
         p = procs.get(pid)
         return p.comm if p else None
 
+    skipped = skipped_checks(ev)
     report = {
         "image": ev.image_path,
         "summary": {
             "processes_analysed": len(ev.tasks_list),
             "rule_findings": len(rule_findings),
             "anomalies": len(anomalies),
+            "checks_skipped": len(skipped),
         },
+        "checks_skipped": skipped,
         "rule_findings": [
             {
                 "rule": f.rule,
@@ -84,6 +88,14 @@ def render_html(report: dict, out_path: str | Path) -> Path:
         for a in report["anomalies"]
     ) or '<p class="empty">No processes exceeded the anomaly cutoff.</p>'
 
+    skipped = report.get("checks_skipped") or []
+    warn_box = (
+        '<div class="warn"><strong>Some checks did not run fully on this image.</strong> '
+        'A clean result for these checks is not verified:<ul>'
+        + "".join(f"<li>{e(n)}</li>" for n in skipped)
+        + "</ul></div>"
+    ) if skipped else ""
+
     page = f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SPF Report - {e(report["image"])}</title><style>
@@ -101,6 +113,8 @@ def render_html(report: dict, out_path: str | Path) -> Path:
  .pill{{display:inline-block;font-size:12px;padding:1px 8px;border-radius:999px;background:#eef2f6;color:var(--navy);margin-right:6px}}
  .pill.red{{background:#fde8e8;color:var(--red)}} code{{background:#f0f3f6;padding:1px 4px;border-radius:4px}}
  .empty{{color:var(--grey);font-style:italic}}
+ .warn{{background:#fff7e0;border:1px solid #e8c25a;border-radius:8px;padding:12px 14px;margin:0 0 20px;font-size:14px}}
+ .warn ul{{margin:6px 0 0 18px;padding:0}}
 </style></head><body><div class="wrap">
  <h1>SPF - Suspicious Process Finder</h1>
  <p class="sub">Image: <code>{e(report["image"])}</code> &nbsp;|&nbsp; {s["processes_analysed"]} processes analysed</p>
@@ -108,6 +122,7 @@ def render_html(report: dict, out_path: str | Path) -> Path:
   <div class="card red"><div class="n">{s["rule_findings"]}</div><div>Definitive (rule) findings</div></div>
   <div class="card blue"><div class="n">{s["anomalies"]}</div><div>Behavioural anomalies</div></div>
  </div>
+ {warn_box}
  <h2>Definitive indicators (rule stage)</h2>{rows_rules}
  <h2>Behavioural anomalies (Isolation Forest)</h2>{rows_anom}
 </div></body></html>"""

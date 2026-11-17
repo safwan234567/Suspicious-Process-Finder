@@ -1,6 +1,15 @@
 from spf.models import KernelModule, MemoryEvidence, Process, SyscallEntry
 from spf.rules import run_rules
-from spf.rules.checks import check_dkom_hidden_processes, check_hidden_modules, check_syscall_hooks
+from spf.report.builder import build_report, render_html
+from spf.rules.checks import (
+    HIDDEN_MODULES_PLUGIN,
+    PIDHASH_PLUGIN,
+    SYSCALL_PLUGIN,
+    check_dkom_hidden_processes,
+    check_hidden_modules,
+    check_syscall_hooks,
+    skipped_checks,
+)
 
 KERNEL = (0xFFFF0000, 0xFFFF9000)
 GOOD_MOD = KernelModule("ext4", 0xA000, 0x1000)
@@ -18,6 +27,44 @@ def evidence(**overrides) -> MemoryEvidence:
     )
     base.update(overrides)
     return MemoryEvidence(**base)
+
+
+def test_missing_pid_hash_skips_dkom_rule():
+    assert check_dkom_hidden_processes(evidence(pid_hash_pids=None)) == []
+
+
+def test_skipped_checks_empty_when_everything_ran():
+    assert skipped_checks(evidence()) == []
+
+
+def test_skipped_checks_lists_each_affected_rule():
+    ev = evidence(
+        pid_hash_pids=None,
+        kernel_text=None,
+        unavailable_plugins=[PIDHASH_PLUGIN, HIDDEN_MODULES_PLUGIN, SYSCALL_PLUGIN, "linux.lsof.Lsof"],
+    )
+    notes = " ".join(skipped_checks(ev))
+    for expected in ("DKOM_HIDDEN_PROCESS", "HIDDEN_KERNEL_MODULE", "HOOKED_SYSCALL", "linux.lsof.Lsof"):
+        assert expected in notes
+
+
+def test_report_includes_skipped_checks(tmp_path):
+    ev = evidence(pid_hash_pids=None, unavailable_plugins=[PIDHASH_PLUGIN])
+    report = build_report(ev, run_rules(ev), [])
+    assert report["summary"]["checks_skipped"] == 1
+    assert "DKOM_HIDDEN_PROCESS" in report["checks_skipped"][0]
+    page = render_html(report, tmp_path / "r.html").read_text()
+    assert "did not run fully" in page
+
+
+def test_unknown_kernel_range_skips_syscall_rule():
+    table = [SyscallEntry(0, 0xFFFF0100, "sys_read"), SyscallEntry(62, 0xDEAD0000, None)]
+    assert check_syscall_hooks(evidence(kernel_text=None, syscall_table=table)) == []
+
+
+def test_invalid_kernel_range_skips_syscall_rule():
+    table = [SyscallEntry(0, 0xFFFF0100, "sys_read")]
+    assert check_syscall_hooks(evidence(kernel_text=(0, 0), syscall_table=table)) == []
 
 
 def test_clean_image_has_no_findings():

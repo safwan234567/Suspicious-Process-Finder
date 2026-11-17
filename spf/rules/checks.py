@@ -6,11 +6,24 @@ certainty and kept separate from anomaly scores.
 
 from __future__ import annotations
 
+import sys
+
 from spf.models import MemoryEvidence, RuleFinding
+
+# Volatility plugins each rule depends on.
+PIDHASH_PLUGIN = "linux.pidhashtable.PIDHashTable"
+HIDDEN_MODULES_PLUGIN = "linux.malware.hidden_modules.Hidden_modules"
+SYSCALL_PLUGIN = "linux.malware.check_syscall.Check_syscall"
+LSMOD_PLUGIN = "linux.lsmod.Lsmod"
 
 
 def check_dkom_hidden_processes(ev: MemoryEvidence) -> list[RuleFinding]:
-    """Process present in the PID hash table but missing from the tasks linked list."""
+    """Process present in the PID hash table but missing from the tasks linked list.
+
+    Skipped (returns no findings) when the PID hash table is unavailable."""
+    if ev.pid_hash_pids is None:
+        sys.stderr.write("[spf.rules] WARNING: PID hash table unavailable; DKOM_HIDDEN_PROCESS check skipped.\n")
+        return []
     listed = {p.pid for p in ev.tasks_list}
     return [
         RuleFinding(
@@ -37,7 +50,15 @@ def check_hidden_modules(ev: MemoryEvidence) -> list[RuleFinding]:
 
 
 def check_syscall_hooks(ev: MemoryEvidence) -> list[RuleFinding]:
-    """Syscall table entry pointing outside kernel code and every registered module."""
+    """Syscall table entry pointing outside kernel code and every registered module.
+
+    Skipped (returns no findings) when the kernel code range is unknown or
+    invalid: without it every syscall would look hooked."""
+    if ev.kernel_text is None or ev.kernel_text[1] <= ev.kernel_text[0]:
+        sys.stderr.write(
+            "[spf.rules] WARNING: kernel code range unknown; HOOKED_SYSCALL check skipped.\n"
+        )
+        return []
     k_start, k_end = ev.kernel_text
     ranges = [(m.base, m.base + m.size) for m in ev.registered_modules]
 
@@ -55,6 +76,27 @@ def check_syscall_hooks(ev: MemoryEvidence) -> list[RuleFinding]:
         for e in ev.syscall_table
         if not is_legit(e)
     ]
+
+
+def skipped_checks(ev: MemoryEvidence) -> list[str]:
+    """Plain-language list of checks that could not run fully on this image,
+    so a clean result is not mistaken for a verified one."""
+    failed = set(ev.unavailable_plugins)
+    notes = []
+    if ev.pid_hash_pids is None or PIDHASH_PLUGIN in failed:
+        notes.append("DKOM_HIDDEN_PROCESS skipped: the PID hash table could not be read.")
+    if HIDDEN_MODULES_PLUGIN in failed:
+        notes.append("HIDDEN_KERNEL_MODULE skipped: the hidden-module scan failed.")
+    if LSMOD_PLUGIN in failed:
+        notes.append("HIDDEN_KERNEL_MODULE and HOOKED_SYSCALL unreliable: the registered module list could not be read.")
+    if SYSCALL_PLUGIN in failed:
+        notes.append("HOOKED_SYSCALL skipped: the syscall table could not be read.")
+    if ev.kernel_text is None or ev.kernel_text[1] <= ev.kernel_text[0]:
+        notes.append("HOOKED_SYSCALL skipped: the kernel code range could not be resolved.")
+    ml_inputs = sorted(failed - {PIDHASH_PLUGIN, HIDDEN_MODULES_PLUGIN, SYSCALL_PLUGIN, LSMOD_PLUGIN})
+    if ml_inputs:
+        notes.append("ML features incomplete (affected values read as 0): " + ", ".join(ml_inputs) + " failed.")
+    return notes
 
 
 def run_rules(ev: MemoryEvidence) -> list[RuleFinding]:
