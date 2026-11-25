@@ -1,6 +1,11 @@
 """Stage D - TreeSHAP attribution and plain-language explanations.
 
-Only applied to processes whose score exceeds the baseline threshold.
+Only applied to processes the ML stage reports (score above the cutoff, or a
+value never seen on the clean baseline).
+
+Features that never varied on the clean baseline are named first: Isolation
+Forest cannot split on them, so TreeSHAP gives them exactly 0 and they would
+otherwise never appear in the sentence (evaluation section 4.5).
 
 Uses shap.TreeExplainer on the Isolation Forest when the shap package is
 available (exact per-feature attribution, proposal section III.D). When shap
@@ -34,16 +39,27 @@ def _contributions(model: SPFModel, x: np.ndarray) -> tuple[np.ndarray, str]:
     try:
         import shap
 
-        explainer = shap.TreeExplainer(model.forest)
-        vals = np.asarray(explainer.shap_values(x.reshape(1, -1)))[0]
+        if getattr(model, "_explainer", None) is None:
+            model._explainer = shap.TreeExplainer(model.forest)
+        # the forest was trained on log-scaled features, so explain that input
+        vals = np.asarray(model._explainer.shap_values(model.transform(x.reshape(1, -1))))[0]
         return vals, "TreeSHAP"
     except Exception:
         base = model.feature_means if model.feature_means is not None else np.zeros_like(x)
         return x - base, "baseline-deviation"
 
 
-def explain(model: SPFModel, features: dict[str, float], top_k: int = 3) -> tuple[dict[str, float], str]:
-    """Return (per-feature contributions, plain-language sentence)."""
+def explain(
+    model: SPFModel,
+    features: dict[str, float],
+    top_k: int = 3,
+    novel: list[str] | None = None,
+) -> tuple[dict[str, float], str]:
+    """Return (per-feature contributions, plain-language sentence).
+
+    `novel` lists features whose value never occurred on the clean baseline;
+    they lead the sentence, followed by up to top_k TreeSHAP-ranked features."""
+    novel = list(novel or [])
     x = np.array([features[f] for f in FEATURE_NAMES], dtype=float)
     contrib, _method = _contributions(model, x)
     contributions = {f: float(c) for f, c in zip(FEATURE_NAMES, contrib)}
@@ -62,13 +78,21 @@ def explain(model: SPFModel, features: dict[str, float], top_k: int = 3) -> tupl
             return features[f] >= 1.0
         return features[f] > mean_by[f]
 
-    ranked = sorted(FEATURE_NAMES, key=lambda f: abs(contributions[f]), reverse=True)
     parts = []
+    if novel:
+        n = getattr(model, "n_train", 0)
+        where = f"any of the {n} clean baseline processes" if n else "the clean baseline"
+        unseen = [PHRASES[f].format(value=features.get(f, 0.0)) for f in novel]
+        parts.append("; ".join(unseen) + f" (never seen in {where})")
+
+    ranked = sorted(FEATURE_NAMES, key=lambda f: abs(contributions[f]), reverse=True)
+    extra = 0
     for f in ranked:
-        if len(parts) >= top_k:
+        if extra >= top_k:
             break
-        if elevated(f):
+        if f not in novel and elevated(f) and contributions[f] != 0.0:
             parts.append(PHRASES[f].format(value=features.get(f, 0.0)))
+            extra += 1
 
     if parts:
         sentence = "Flagged due to " + "; ".join(parts) + "."

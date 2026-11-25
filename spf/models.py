@@ -62,6 +62,7 @@ class MemoryEvidence:
     syscall_table: list[SyscallEntry]
     kernel_text: tuple[int, int] | None = None  # (start, end) of kernel code; None = unknown
     unavailable_plugins: list[str] = field(default_factory=list)  # plugins that failed or returned no data
+    raw_plugin_rows: dict = field(default_factory=dict)           # plugin name -> rows (manual-triage burden)
 
 
 @dataclass
@@ -84,3 +85,5 @@ class AnomalyFinding:
     features: dict[str, float]
     contributions: dict[str, float] = field(default_factory=dict)  # TreeSHAP values
     explanation: str = ""
+    novel_features: list[str] = field(default_factory=list)  # values never seen on the clean baseline
+    reason: str = "score"  # "score" (above cutoff) or "novelty" (unseen baseline value)
