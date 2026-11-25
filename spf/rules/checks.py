@@ -8,7 +8,7 @@ from __future__ import annotations
 
 import sys
 
-from spf.models import MemoryEvidence, RuleFinding
+from spf.models import MemoryEvidence, RuleFinding, SyscallEntry
 
 # Volatility plugins each rule depends on.
 PIDHASH_PLUGIN = "linux.pidhashtable.PIDHashTable"
@@ -35,17 +35,41 @@ def check_dkom_hidden_processes(ev: MemoryEvidence) -> list[RuleFinding]:
     ]
 
 
+# A clean system rarely has more than a handful of modules the standard list
+# misses. A memory scan that reports dozens as "hidden" is almost always the
+# carving plugin over-reporting on a degraded image (seen when linux.proc.Maps
+# and the PID hash table also fail on the same capture), not dozens of rootkits.
+# Above this count the rule is treated as unreliable and skipped, so one bad
+# capture does not produce a wall of false positives.
+MAX_PLAUSIBLE_HIDDEN_MODULES = 5
+
+
 def check_hidden_modules(ev: MemoryEvidence) -> list[RuleFinding]:
-    """Kernel module present in memory but omitted from the registered module list."""
-    registered = {(m.name, m.base) for m in ev.registered_modules}
+    """Kernel module present in memory but omitted from the registered module list.
+
+    A module is hidden only if its NAME is absent from the registered (lsmod)
+    list: DKOM module hiding unlinks the module entirely, so its name disappears.
+    Matching on name (not name+address) avoids false positives when the carving
+    plugin and lsmod report slightly different base addresses for the same
+    legitimate module."""
+    registered_names = {m.name for m in ev.registered_modules}
+    hidden = [
+        m for m in ev.memory_modules
+        if m.name not in registered_names and m.name not in ("?", "")
+    ]
+    if len(hidden) > MAX_PLAUSIBLE_HIDDEN_MODULES:
+        sys.stderr.write(
+            f"[spf.rules] WARNING: {len(hidden)} modules look hidden; the module "
+            "scan is unreliable on this image, HIDDEN_KERNEL_MODULE skipped.\n"
+        )
+        return []
     return [
         RuleFinding(
             rule="HIDDEN_KERNEL_MODULE",
             description=f"Module '{m.name}' at {m.base:#x} is in memory but not in the module list",
             evidence={"name": m.name, "base": m.base, "size": m.size},
         )
-        for m in ev.memory_modules
-        if (m.name, m.base) not in registered
+        for m in hidden
     ]
 
 
@@ -87,6 +111,12 @@ def skipped_checks(ev: MemoryEvidence) -> list[str]:
         notes.append("DKOM_HIDDEN_PROCESS skipped: the PID hash table could not be read.")
     if HIDDEN_MODULES_PLUGIN in failed:
         notes.append("HIDDEN_KERNEL_MODULE skipped: the hidden-module scan failed.")
+    registered_names = {m.name for m in ev.registered_modules}
+    n_hidden = sum(1 for m in ev.memory_modules
+                   if m.name not in registered_names and m.name not in ("?", ""))
+    if n_hidden > MAX_PLAUSIBLE_HIDDEN_MODULES:
+        notes.append(f"HIDDEN_KERNEL_MODULE skipped: {n_hidden} modules looked hidden, "
+                     "which means the module scan was unreliable on this image.")
     if LSMOD_PLUGIN in failed:
         notes.append("HIDDEN_KERNEL_MODULE and HOOKED_SYSCALL unreliable: the registered module list could not be read.")
     if SYSCALL_PLUGIN in failed:

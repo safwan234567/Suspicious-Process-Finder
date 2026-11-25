@@ -44,10 +44,16 @@ SUPPORTED_FORMATS = {".raw", ".lime"}
 
 
 def _col(row: dict, *names, default=None):
-    """Return the first present column from several candidate spellings."""
+    """Return the first present column from several candidate spellings.
+
+    Matching is case-insensitive: Volatility renames columns between releases
+    (e.g. linux.envars.Envars uses KEY/VALUE in 2.28), and a silent miss here
+    turns a feature such as has_ld_preload into a constant 0."""
+    lower = {k.lower(): k for k in row}
     for n in names:
-        if n in row and row[n] not in (None, "-"):
-            return row[n]
+        k = n if n in row else lower.get(n.lower())
+        if k is not None and row[k] not in (None, "-"):
+            return row[k]
     return default
 
 
@@ -184,6 +190,17 @@ def extract(image_path: str | Path, symbols_dir: str | Path) -> MemoryEvidence:
     pidhash = _safe(image_path, symbols_dir, PIDHASH_PLUGIN, failed)
     hidden = _safe(image_path, symbols_dir, HIDDEN_MODULES_PLUGIN, failed)
 
+    # Raw rows per plugin: the lines an analyst would read by hand across these
+    # separate plugin tables. Used by eval/compare_vs_raw.py to quantify how much
+    # manual triage SPF removes.
+    raw_plugin_rows = {
+        "linux.pslist.PsList": len(pslist), "linux.proc.Maps": len(maps),
+        "linux.lsof.Lsof": len(lsof), "linux.sockstat.Sockstat": len(sockstat),
+        "linux.psaux.PsAux": len(psaux), "linux.envars.Envars": len(envars),
+        "linux.lsmod.Lsmod": len(lsmod), SYSCALL_PLUGIN: len(syscalls),
+        PIDHASH_PLUGIN: len(pidhash), HIDDEN_MODULES_PLUGIN: len(hidden),
+    }
+
     # A live kernel always has PIDs and syscall entries, so an empty result
     # means the plugin did not work even if it raised no error.
     for name, rows in ((PIDHASH_PLUGIN, pidhash), (SYSCALL_PLUGIN, syscalls)):
@@ -218,7 +235,8 @@ def extract(image_path: str | Path, symbols_dir: str | Path) -> MemoryEvidence:
         pid = _int(_col(r, "PID", "Pid"))
         args = str(_col(r, "ARGS", "Args", "COMM", "Command", default=""))
         cmd_by_pid[pid] = args
-        exe_by_pid[pid] = args.split()[0] if args else ""
+        parts = args.split()
+        exe_by_pid[pid] = parts[0] if parts else ""
 
     env_by_pid: dict[int, dict[str, str]] = {}
     for r in envars:
@@ -287,4 +305,5 @@ def extract(image_path: str | Path, symbols_dir: str | Path) -> MemoryEvidence:
         syscall_table=syscall_table,
         kernel_text=_kernel_text(ctx),
         unavailable_plugins=failed,
+        raw_plugin_rows=raw_plugin_rows,
     )
