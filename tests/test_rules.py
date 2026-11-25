@@ -82,6 +82,23 @@ def test_hidden_module():
     assert len(findings) == 1 and findings[0].evidence["name"] == "diamorphine"
 
 
+def test_hidden_module_matches_by_name_not_base():
+    """Same module, different base in the two plugins, must NOT be a false
+    positive (the degraded-image bug: base addresses disagreed)."""
+    same_name_other_base = KernelModule("ext4", 0xA000 + 0x40, 0x1000)
+    findings = check_hidden_modules(evidence(memory_modules=[GOOD_MOD, same_name_other_base]))
+    assert findings == []
+
+
+def test_many_hidden_modules_is_treated_as_unreliable():
+    """A carving plugin that reports dozens of legit modules as hidden means a
+    degraded image, so the rule skips instead of firing a wall of FPs."""
+    carved = [KernelModule(f"legit_mod_{i}", 0xC000 + i * 0x100, 0x1000) for i in range(30)]
+    ev = evidence(memory_modules=[GOOD_MOD] + carved)
+    assert check_hidden_modules(ev) == []
+    assert any("unreliable" in n for n in skipped_checks(ev))
+
+
 def test_hooked_syscall():
     table = [SyscallEntry(0, 0xFFFF0100, "sys_read"), SyscallEntry(62, 0xDEAD0000, None)]
     findings = check_syscall_hooks(evidence(syscall_table=table))
