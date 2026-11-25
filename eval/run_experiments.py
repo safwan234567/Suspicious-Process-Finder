@@ -21,9 +21,10 @@ from pathlib import Path
 import yaml
 
 from spf.extraction.volatility import extract
-from spf.ml.features import features_for_processes
+from spf.pipeline import find_anomalies
 from spf.ml.model import SPFModel
 from spf.rules.checks import run_rules
+from spf.report.builder import build_report, render_html
 
 CONFIGURATIONS = ["rules", "ml", "both"]
 
@@ -78,13 +79,28 @@ def _evaluate_image_data(rule_findings, anomalies, gt_entry: dict, runtime_s: fl
     }
 
 
-def evaluate(symbols: str | None, model_path: str | None, gt_path: str, out_path: str, reports_dir: str = "eval/results") -> dict:
+def _detect_from_cache(cache: dict, model):
+    """Rule findings + ML anomalies for one image from its cached feature file
+    (eval/extract_features.py output). Lets the evaluation run without touching
+    the 4 GB images, so it is fast and reproducible."""
+    from spf.ml.features import FEATURE_NAMES
+    rule_findings = cache.get("rule_findings", [])
+    anomalies = []
+    if model is not None:
+        rows = [p["features"] for p in cache["processes"]]
+        for d in model.detect(rows):
+            p = cache["processes"][d.index]
+            anomalies.append({"pid": p["pid"], "reason": d.reason,
+                              "novel_features": d.novel_features, "score": d.score})
+    return rule_findings, anomalies
+
+
+def evaluate(symbols: str | None, model_path: str | None, gt_path: str, out_path: str,
+             reports_dir: str = "eval/results", features_dir: str | None = None) -> dict:
     gt = yaml.safe_load(Path(gt_path).read_text()) or {}
     images = gt.get("images", [])
     model = SPFModel.load(model_path) if model_path and Path(model_path).exists() else None
-
-    # Standard runtimes measured during baseline evaluations (approx 520s per image)
-    AVG_EXTRACT_TIME = 521.4
+    fdir = Path(features_dir) if features_dir else None
 
     metrics = {
         cfg: {
@@ -105,36 +121,47 @@ def evaluate(symbols: str | None, model_path: str | None, gt_path: str, out_path
 
     per_image_results = []
     rdir = Path(reports_dir)
-
-    REPORT_MAP = {
-        "baseline/images/clean_jit.lime": rdir / "clean_jit.json",
-        "eval/images/infected/diamorphine.lime": rdir / "infected_both.json",
-        "eval/images/infected/userland_malware.lime": rdir / "userland_malware.json",
-    }
+    rdir.mkdir(parents=True, exist_ok=True)
+    runtimes = {}  # image -> {"extract","rules","ml"} seconds, measured on this run
 
     for entry in images:
         image = entry["image"]
-        report_file = REPORT_MAP.get(image)
-        
-        if report_file and report_file.exists():
-            print(f"[*] Loading pre-extracted evaluation report for: {image}")
-            rep_data = json.loads(report_file.read_text())
-            rule_findings = rep_data.get("rule_findings", [])
-            anomalies = rep_data.get("anomalies", [])
-            dt_base = AVG_EXTRACT_TIME
-        else:
-            print(f"[*] Running full Volatility extraction on: {image}")
-            t_ext0 = time.perf_counter()
-            ev = extract(image, symbols or "symbols")
-            dt_base = time.perf_counter() - t_ext0
-            rule_findings = [f.__dict__ for f in run_rules(ev)]
-            anomalies = []
-            if model is not None:
-                for pid, feats in features_for_processes(ev.tasks_list):
-                    if float(model.score([feats])[0]) >= model.threshold:
-                        anomalies.append({"pid": pid, "features": feats})
+        stem = Path(image).stem
+        cache_file = fdir / f"{stem}.json" if fdir else None
 
-        eval_data = _evaluate_image_data(rule_findings, anomalies, entry, dt_base)
+        if cache_file and cache_file.exists():
+            # reproducible path: use the committed feature cache, no extraction
+            print(f"[*] Using feature cache for {image}")
+            cache = json.loads(cache_file.read_text())
+            rule_findings, anomalies = _detect_from_cache(cache, model)
+            t_ext = float(cache.get("extract_seconds", 0.0))
+            t_rules = t_ml = 0.0
+        else:
+            # One real extraction per image, timed. No assumed runtime.
+            print(f"[*] Extracting {image} ...")
+            t0 = time.perf_counter()
+            ev = extract(image, symbols or "symbols")
+            t_ext = time.perf_counter() - t0
+            t0 = time.perf_counter()
+            rule_objs = run_rules(ev)
+            t_rules = time.perf_counter() - t0
+            rule_findings = [f.__dict__ for f in rule_objs]
+            anomaly_objs = []
+            t_ml = 0.0
+            if model is not None:
+                t0 = time.perf_counter()
+                anomaly_objs = find_anomalies(ev.tasks_list, model)
+                t_ml = time.perf_counter() - t0
+            anomalies = [a.__dict__ for a in anomaly_objs]
+            report = build_report(ev, rule_objs, anomaly_objs)
+            (rdir / f"{stem}.json").write_text(json.dumps(report, indent=2, default=str))
+            render_html(report, rdir / f"{stem}.html")
+
+        runtimes[image] = {"extract": t_ext, "rules": t_rules, "ml": t_ml}
+        print(f"    extract {t_ext:.1f}s  rules {t_rules:.2f}s  ml {t_ml:.2f}s  "
+              f"({len(rule_findings)} rule findings, {len(anomalies)} anomalies)")
+
+        eval_data = _evaluate_image_data(rule_findings, anomalies, entry, t_ext)
         gt_pids = eval_data["pids"]["gt"]
         gt_mods = eval_data["modules"]["gt"]
         gt_sys = eval_data["syscalls"]["gt"]
@@ -171,7 +198,10 @@ def evaluate(symbols: str | None, model_path: str | None, gt_path: str, out_path
             m["overall_tp"] += (pid_tp + k_tp)
             m["overall_fp"] += (pid_fp + k_fp)
             m["overall_total"] += total_indicators
-            m["runtime_s"] += dt_base + (0.5 if cfg != "rules" else 0.0)
+            rt = runtimes[image]
+            cfg_rt = rt["extract"] + (rt["rules"] if cfg in ("rules", "both") else 0.0) \
+                + (rt["ml"] if cfg in ("ml", "both") else 0.0)
+            m["runtime_s"] += cfg_rt
             m["images"] += 1
 
             image_summary["detections"][cfg] = {
@@ -236,8 +266,10 @@ def main() -> None:
     ap.add_argument("--model", default="baseline/models/spf.joblib")
     ap.add_argument("--ground-truth", default="eval/ground_truth.yaml")
     ap.add_argument("--out", default="eval/results/metrics.json")
+    ap.add_argument("--features", default=None,
+                    help="feature-cache dir (eval/features); if set, evaluate from cache without extraction")
     args = ap.parse_args()
-    evaluate(args.symbols, args.model, args.ground_truth, args.out)
+    evaluate(args.symbols, args.model, args.ground_truth, args.out, features_dir=args.features)
 
 
 if __name__ == "__main__":

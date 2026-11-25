@@ -1,21 +1,35 @@
+# Ground truth for the real Kali 6.18.12+kali-amd64 evaluation images.
+# Captured 2026-11-25 on an isolated VMware VM (snapshot: spf-clean-before-rootkits)
+# with LiME. Training images (baseline/images/clean_train_*) are NOT listed here;
+# they are used only to fit the model. Testing uses unseen images only.
 images:
-  - image: baseline/images/clean_jit.lime
+  # clean test image: idle + Java/Node JIT + headless Firefox + python server,
+  # no malware. All workloads are benign; any flag here is a false positive.
+  - image: eval/images/clean/clean_test_02_all.lime
     rootkit: None
     hidden_pids: []
     hidden_modules: []
     hooked_syscalls: []
     malicious_pids: []
 
+  # Diamorphine LKM rootkit (patched to unlink task_struct->tasks on SIGINVIS).
+  # Decoy sleeper PID 2486 hidden by DKOM; module auto-hidden; kill + getdents64
+  # syscall-table entries hooked.
   - image: eval/images/infected/diamorphine.lime
     rootkit: Diamorphine
-    hidden_pids: [3590]
+    hidden_pids: [2486]
     hidden_modules: [diamorphine]
     hooked_syscalls: [__x64_sys_kill, __x64_sys_getdents64]
-    malicious_pids: [3590]
+    malicious_pids: [2486]
 
+  # Userland agent: runs from /dev/shm, LD_PRELOAD set, bound TCP socket 44444.
+  # Does NOT touch kernel structures, so the rule stage sees nothing; the ML
+  # stage must catch it via the novelty path (runs_from_tmp_or_shm + has_ld_preload
+  # were constant 0 on the clean baseline). Benign JIT/browser workloads also
+  # present, to test that the model does not false-positive on them.
   - image: eval/images/infected/userland_malware.lime
     rootkit: None
     hidden_pids: []
     hidden_modules: []
     hooked_syscalls: []
-    malicious_pids: [5717]
+    malicious_pids: [2508]

@@ -22,16 +22,16 @@
         "detection_rate": 0.8,
         "fp_per_image": 0.0
       },
-      "avg_runtime_s": 521.4,
+      "avg_runtime_s": 286.2,
       "total_images": 3
     },
     "ml": {
       "process_level": {
-        "tp": 0,
-        "fp": 10,
+        "tp": 1,
+        "fp": 2,
         "malicious_total": 2,
-        "detection_rate": 0.0,
-        "fp_per_image": 3.3333
+        "detection_rate": 0.5,
+        "fp_per_image": 0.6667
       },
       "kernel_rootkit_level": {
         "tp": 0,
@@ -41,22 +41,22 @@
         "fp_per_image": 0.0
       },
       "overall_indicators": {
-        "tp": 0,
-        "fp": 10,
+        "tp": 1,
+        "fp": 2,
         "malicious_total": 5,
-        "detection_rate": 0.0,
-        "fp_per_image": 3.3333
+        "detection_rate": 0.2,
+        "fp_per_image": 0.6667
       },
-      "avg_runtime_s": 521.9,
+      "avg_runtime_s": 286.2,
       "total_images": 3
     },
     "both": {
       "process_level": {
-        "tp": 1,
-        "fp": 10,
+        "tp": 2,
+        "fp": 2,
         "malicious_total": 2,
-        "detection_rate": 0.5,
-        "fp_per_image": 3.3333
+        "detection_rate": 1.0,
+        "fp_per_image": 0.6667
       },
       "kernel_rootkit_level": {
         "tp": 3,
@@ -66,19 +66,19 @@
         "fp_per_image": 0.0
       },
       "overall_indicators": {
-        "tp": 4,
-        "fp": 10,
+        "tp": 5,
+        "fp": 2,
         "malicious_total": 5,
-        "detection_rate": 0.8,
-        "fp_per_image": 3.3333
+        "detection_rate": 1.0,
+        "fp_per_image": 0.6667
       },
-      "avg_runtime_s": 521.9,
+      "avg_runtime_s": 286.2,
       "total_images": 3
     }
   },
   "per_image": [
     {
-      "image": "baseline/images/clean_jit.lime",
+      "image": "eval/images/clean/clean_test_02_all.lime",
       "ground_truth": {
         "malicious_pids": [],
         "hidden_modules": [],
@@ -96,27 +96,23 @@
         },
         "ml": {
           "detected_pids": [
-            681,
-            1383,
-            1385
+            30134
           ],
           "detected_modules": [],
           "detected_syscalls": [],
           "pid_tp": 0,
-          "pid_fp": 3,
+          "pid_fp": 1,
           "kernel_tp": 0,
           "kernel_fp": 0
         },
         "both": {
           "detected_pids": [
-            681,
-            1383,
-            1385
+            30134
           ],
           "detected_modules": [],
           "detected_syscalls": [],
           "pid_tp": 0,
-          "pid_fp": 3,
+          "pid_fp": 1,
           "kernel_tp": 0,
           "kernel_fp": 0
         }
@@ -126,7 +122,7 @@
       "image": "eval/images/infected/diamorphine.lime",
       "ground_truth": {
         "malicious_pids": [
-          3590
+          2486
         ],
         "hidden_modules": [
           "diamorphine"
@@ -139,7 +135,7 @@
       "detections": {
         "rules": {
           "detected_pids": [
-            3590
+            2486
           ],
           "detected_modules": [
             "diamorphine"
@@ -154,24 +150,17 @@
           "kernel_fp": 0
         },
         "ml": {
-          "detected_pids": [
-            778,
-            1215,
-            1216
-          ],
+          "detected_pids": [],
           "detected_modules": [],
           "detected_syscalls": [],
           "pid_tp": 0,
-          "pid_fp": 3,
+          "pid_fp": 0,
           "kernel_tp": 0,
           "kernel_fp": 0
         },
         "both": {
           "detected_pids": [
-            778,
-            1215,
-            1216,
-            3590
+            2486
           ],
           "detected_modules": [
             "diamorphine"
@@ -181,7 +170,7 @@
             "__x64_sys_kill"
           ],
           "pid_tp": 1,
-          "pid_fp": 3,
+          "pid_fp": 0,
           "kernel_tp": 3,
           "kernel_fp": 0
         }
@@ -191,7 +180,7 @@
       "image": "eval/images/infected/userland_malware.lime",
       "ground_truth": {
         "malicious_pids": [
-          5717
+          2508
         ],
         "hidden_modules": [],
         "hooked_syscalls": []
@@ -208,29 +197,25 @@
         },
         "ml": {
           "detected_pids": [
-            681,
-            1383,
-            1385,
-            5684
+            2508,
+            2619
           ],
           "detected_modules": [],
           "detected_syscalls": [],
-          "pid_tp": 0,
-          "pid_fp": 4,
+          "pid_tp": 1,
+          "pid_fp": 1,
           "kernel_tp": 0,
           "kernel_fp": 0
         },
         "both": {
           "detected_pids": [
-            681,
-            1383,
-            1385,
-            5684
+            2508,
+            2619
           ],
           "detected_modules": [],
           "detected_syscalls": [],
-          "pid_tp": 0,
-          "pid_fp": 4,
+          "pid_tp": 1,
+          "pid_fp": 1,
           "kernel_tp": 0,
           "kernel_fp": 0
         }

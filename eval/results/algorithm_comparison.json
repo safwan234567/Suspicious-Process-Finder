@@ -1,0 +1,85 @@
+{
+  "protocol": {
+    "train_images": [
+      "clean_train_01_idle",
+      "clean_train_02_jit",
+      "clean_train_03_browser"
+    ],
+    "malware_image": "userland_malware",
+    "malicious_pid": 2508,
+    "train_processes": 722,
+    "malware_processes": 260,
+    "benign_in_malware_image": 259,
+    "seeds": 10
+  },
+  "results": [
+    {
+      "algorithm": "Isolation Forest (pure: raw features, 99th pct cutoff)",
+      "agent_detection_rate": 0.0,
+      "false_positives": 7.8,
+      "fit_ms": 121.4,
+      "score_ms": 7.6
+    },
+    {
+      "algorithm": "Isolation Forest + SPF augmentation (log + max cutoff + novelty)",
+      "agent_detection_rate": 1.0,
+      "false_positives": 0.5,
+      "fit_ms": 122.0,
+      "score_ms": 7.8
+    },
+    {
+      "algorithm": "One-Class SVM (RBF, nu=0.05, raw)",
+      "agent_detection_rate": 1.0,
+      "false_positives": 253,
+      "fit_ms": 3.0,
+      "score_ms": 0.6
+    },
+    {
+      "algorithm": "One-Class SVM (RBF, nu=0.05, log-scaled)",
+      "agent_detection_rate": 0.0,
+      "false_positives": 16,
+      "fit_ms": 1.0,
+      "score_ms": 0.6
+    },
+    {
+      "algorithm": "Local Outlier Factor (k=20, raw)",
+      "agent_detection_rate": 0.0,
+      "false_positives": 27,
+      "fit_ms": 4.9,
+      "score_ms": 1.7
+    },
+    {
+      "algorithm": "Local Outlier Factor (k=20, log-scaled)",
+      "agent_detection_rate": 0.0,
+      "false_positives": 20,
+      "fit_ms": 3.8,
+      "score_ms": 1.4
+    },
+    {
+      "algorithm": "Baseline-invariant novelty only (no model)",
+      "agent_detection_rate": 1.0,
+      "false_positives": 0,
+      "fit_ms": 0.0,
+      "score_ms": 0.0
+    }
+  ],
+  "training_data_sensitivity": [
+    {
+      "baseline": "idle+jit only",
+      "invariant_features": [
+        "runs_from_tmp_or_shm",
+        "has_ld_preload"
+      ],
+      "agent_detected": true,
+      "false_positives": 9
+    },
+    {
+      "baseline": "idle+jit+browser",
+      "invariant_features": [
+        "runs_from_tmp_or_shm"
+      ],
+      "agent_detected": true,
+      "false_positives": 0
+    }
+  ]
+}
