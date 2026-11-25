@@ -33,7 +33,7 @@ pip install -e ".[dev]"
 ```
 
 Full instructions, including capturing an image and building the Volatility
-symbol table, are in [docs/USER_MANUAL.md](docs/USER_MANUAL.md).
+symbol table, are in [docs/USER_MANUAL.txt](docs/USER_MANUAL.txt).
 
 ## Usage
 
@@ -66,7 +66,7 @@ python eval/compare_algorithms.py --features eval/features     # IF vs One-Class
 python eval/compare_vs_raw.py     --features eval/features --model baseline/models/spf.joblib
 ```
 
-Headline results (full detail in `eval/results/` and `PROGRESS.md`):
+Headline results (full detail in `eval/results/` and `PROGRESS.txt`):
 
 - Combined rules + ML: **5/5 ground-truth indicators, 0.33 false positives/image**.
 - The rule stage finds all three Diamorphine indicators with zero false
