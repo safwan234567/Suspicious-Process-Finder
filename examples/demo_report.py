@@ -19,11 +19,11 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))  # run without pip 
 
 import numpy as np
 
-from spf.models import VMA, Process, KernelModule, SyscallEntry, MemoryEvidence, AnomalyFinding
-from spf.ml.features import features_for_processes, build_features
+from spf.models import VMA, Process, KernelModule, SyscallEntry, MemoryEvidence
+from spf.ml.features import features_for_processes
 from spf.ml.model import SPFModel
 from spf.rules.checks import run_rules
-from spf.explain.shap_explainer import explain
+from spf.pipeline import find_anomalies
 from spf.report.builder import build_report, render_html
 
 RNG = np.random.default_rng(42)
@@ -96,20 +96,13 @@ def main(out_dir: str = "examples/out") -> dict:
     # 1. train on a clean baseline
     clean = [clean_process(100 + i) for i in range(400)]
     clean_rows = [f for _pid, f in features_for_processes(clean)]
-    model = SPFModel(percentile=99.0).fit(clean_rows)
+    model = SPFModel().fit(clean_rows)
 
     # 2. analyse the suspect image
     ev = suspect_evidence()
     rule_findings = run_rules(ev)
 
-    anomaly_findings = []
-    for pid, feats in features_for_processes(ev.tasks_list):
-        score = float(model.score([feats])[0])
-        if score >= model.threshold:
-            contributions, sentence = explain(model, feats)
-            anomaly_findings.append(AnomalyFinding(
-                pid=pid, score=score, threshold=float(model.threshold),
-                features=feats, contributions=contributions, explanation=sentence))
+    anomaly_findings = find_anomalies(ev.tasks_list, model)
 
     report = build_report(ev, rule_findings, anomaly_findings)
     outd = Path(out_dir)

@@ -1,0 +1,82 @@
+{
+  "image": "D:\\1Digital Forensicss\\Lab\\Kali Shared Folder\\spf_lab\\images\\clean_test_02_all.lime",
+  "summary": {
+    "processes_analysed": 254,
+    "rule_findings": 0,
+    "anomalies": 1,
+    "checks_skipped": 1
+  },
+  "checks_skipped": [
+    "DKOM_HIDDEN_PROCESS skipped: the PID hash table could not be read."
+  ],
+  "flagged_processes": [
+    {
+      "pid": 30134,
+      "comm": "firefox-esr",
+      "ppid": 1,
+      "parent_comm": "systemd",
+      "task_offset": "0x8cc7c4fe3580",
+      "exe_path": "firefox-esr",
+      "cmdline": "firefox-esr --headless --new-instance --profile /home/kali/spf_workload/ffprofile http://localhost:8081/",
+      "connections": [
+        "TCP 192.168.164.136:53674 -> 34.107.243.93:443 ESTABLISHED",
+        "TCP 192.168.164.136:53674 -> 34.107.243.93:443 ESTABLISHED",
+        "TCP 192.168.164.136:53674 -> 34.107.243.93:443 ESTABLISHED",
+        "TCP 192.168.164.136:53674 -> 34.107.243.93:443 ESTABLISHED",
+        "TCP 192.168.164.136:53674 -> 34.107.243.93:443 ESTABLISHED",
+        "TCP 192.168.164.136:53674 -> 34.107.243.93:443 ESTABLISHED",
+        "TCP 192.168.164.136:53674 -> 34.107.243.93:443 ESTABLISHED",
+        "TCP 192.168.164.136:53674 -> 34.107.243.93:443 ESTABLISHED"
+      ],
+      "ancestry": [
+        {
+          "pid": 1,
+          "comm": "systemd"
+        }
+      ],
+      "rule_findings": [],
+      "anomaly": {
+        "score": 0.7758,
+        "threshold": 0.7729,
+        "reason": "score",
+        "novel_features": [],
+        "explanation": "Flagged due to an unusual number of open file descriptors; 5 executable memory region(s) unbacked by disk files; an unusual number of open sockets."
+      }
+    }
+  ],
+  "rule_findings": [],
+  "anomalies": [
+    {
+      "pid": 30134,
+      "comm": "firefox-esr",
+      "ppid": 1,
+      "score": 0.7758,
+      "threshold": 0.7729,
+      "reason": "score",
+      "novel_features": [],
+      "explanation": "Flagged due to an unusual number of open file descriptors; 5 executable memory region(s) unbacked by disk files; an unusual number of open sockets.",
+      "features": {
+        "vma_count": 1924.0,
+        "anon_to_file_ratio": 7.971832979476291,
+        "unbacked_exec_count": 5.0,
+        "unbacked_exec_bytes": 188416.0,
+        "fd_count": 8624.0,
+        "socket_count": 2464.0,
+        "uid_differs_from_parent": 1.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      },
+      "contributions": {
+        "vma_count": -1.0068088734091154,
+        "anon_to_file_ratio": -0.3381908285293215,
+        "unbacked_exec_count": -1.5301282497654094,
+        "unbacked_exec_bytes": -0.9104944426496738,
+        "fd_count": -1.6399015551323333,
+        "socket_count": -1.4614152580392437,
+        "uid_differs_from_parent": -1.4554193279552805,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.025081502979812938
+      }
+    }
+  ]
+}

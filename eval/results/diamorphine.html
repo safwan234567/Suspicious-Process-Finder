@@ -1,0 +1,33 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SPF Report - eval\images\infected\diamorphine.lime</title><style>
+ :root{--navy:#12395c;--blue:#1f6fb2;--red:#b02a2a;--grey:#555;--line:#dde3ea;}
+ *{box-sizing:border-box} body{font-family:system-ui,Segoe UI,Roboto,sans-serif;margin:0;color:#1a1a1a;background:#f6f8fa}
+ .wrap{max-width:960px;margin:0 auto;padding:24px 16px}
+ h1{color:var(--navy);margin:0 0 4px} .sub{color:var(--grey);margin:0 0 20px;font-size:14px}
+ .cards{display:flex;gap:12px;margin:0 0 20px;flex-wrap:wrap}
+ .card{flex:1;min-width:140px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px}
+ .card .n{font-size:28px;font-weight:700} .card.red .n{color:var(--red)} .card.blue .n{color:var(--blue)}
+ h2{color:var(--navy);border-bottom:2px solid var(--blue);padding-bottom:4px;margin-top:28px}
+ .f{background:#fff;border:1px solid var(--line);border-left:4px solid var(--blue);border-radius:8px;padding:12px 14px;margin:10px 0}
+ .f.certain{border-left-color:var(--red)}
+ .f .t{font-weight:700;color:var(--navy);margin-left:4px} .f .m{font-size:14px;color:#333;margin:4px 0}
+ .pill{display:inline-block;font-size:12px;padding:1px 8px;border-radius:999px;background:#eef2f6;color:var(--navy);margin-right:6px}
+ .pill.red{background:#fde8e8;color:var(--red)} .pill.amber{background:#fff1d6;color:#8a5a00} code{background:#f0f3f6;padding:1px 4px;border-radius:4px}
+ .empty{color:var(--grey);font-style:italic}
+ .warn{background:#fff7e0;border:1px solid #e8c25a;border-radius:8px;padding:12px 14px;margin:0 0 20px;font-size:14px}
+ .warn ul{margin:6px 0 0 18px;padding:0}
+</style></head><body><div class="wrap">
+ <h1>SPF - Suspicious Process Finder</h1>
+ <p class="sub">Image: <code>eval\images\infected\diamorphine.lime</code> &nbsp;|&nbsp; 238 processes analysed</p>
+ <div class="cards">
+  <div class="card red"><div class="n">4</div><div>Definitive (rule) findings</div></div>
+  <div class="card blue"><div class="n">0</div><div>Behavioural anomalies</div></div>
+ </div>
+ 
+ <h2>Flagged processes (grouped)</h2>
+ <p class="sub">Every finding under the process it concerns, with memory offset, open connections and parent chain.</p>
+ <div class="f certain"><span class="t">PID 2486 &middot; </span><div class="m"><span class="pill red">certain</span> <b>DKOM_HIDDEN_PROCESS</b> &mdash; PID 2486 is in the PID hash table but unlinked from the task list</div></div><div class="f certain"><span class="t">&lt;kernel&gt;</span><div class="m"><span class="pill red">certain</span> <b>HIDDEN_KERNEL_MODULE</b> &mdash; Module &#x27;diamorphine&#x27; at 0xffffc0d60180 is in memory but not in the module list</div><div class="m"><span class="pill red">certain</span> <b>HOOKED_SYSCALL</b> &mdash; Syscall 62 points to 0xffffc0b6d6d0, outside the kernel and registered modules</div><div class="m"><span class="pill red">certain</span> <b>HOOKED_SYSCALL</b> &mdash; Syscall 217 points to 0xffffc0b6d370, outside the kernel and registered modules</div></div>
+ <h2>Definitive indicators (rule stage)</h2><div class="f certain"><span class="pill red">certain</span><span class="t">DKOM_HIDDEN_PROCESS</span><div class="m">PID 2486 is in the PID hash table but unlinked from the task list</div><div class="m">Target: <code>PID 2486 </code></div></div><div class="f certain"><span class="pill red">certain</span><span class="t">HIDDEN_KERNEL_MODULE</span><div class="m">Module &#x27;diamorphine&#x27; at 0xffffc0d60180 is in memory but not in the module list</div><div class="m">Target: <code></code></div></div><div class="f certain"><span class="pill red">certain</span><span class="t">HOOKED_SYSCALL</span><div class="m">Syscall 62 points to 0xffffc0b6d6d0, outside the kernel and registered modules</div><div class="m">Target: <code></code></div></div><div class="f certain"><span class="pill red">certain</span><span class="t">HOOKED_SYSCALL</span><div class="m">Syscall 217 points to 0xffffc0b6d370, outside the kernel and registered modules</div><div class="m">Target: <code></code></div></div>
+ <h2>Behavioural anomalies (Isolation Forest)</h2><p class="empty">No processes exceeded the anomaly cutoff or showed behaviour unseen on the clean baseline.</p>
+</div></body></html>

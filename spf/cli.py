@@ -14,9 +14,8 @@ from spf.extraction.volatility import extract, SUPPORTED_FORMATS
 from spf.ml.features import features_for_processes
 from spf.ml.model import SPFModel
 from spf.rules.checks import run_rules
-from spf.explain.shap_explainer import explain
+from spf.pipeline import find_anomalies
 from spf.report.builder import build_report, render_html
-from spf.models import AnomalyFinding
 
 
 def _iter_images(images_dir: Path):
@@ -39,23 +38,11 @@ def cmd_train(args) -> None:
     model.save(args.out)
     print(f"[+] trained on {len(rows)} processes from {n_images} image(s); "
           f"cutoff={model.threshold:.3f} -> {args.out}")
-
-
-def _anomalies(ev, model: SPFModel) -> list[AnomalyFinding]:
-    pid_features = features_for_processes(ev.tasks_list)
-    rows = [f for _pid, f in pid_features]
-    if not rows:
-        return []
-    scores = model.score(rows)
-    findings = []
-    for (pid, feats), score in zip(pid_features, scores):
-        if score >= (model.threshold or 0.0):
-            contributions, sentence = explain(model, feats)
-            findings.append(AnomalyFinding(
-                pid=pid, score=float(score), threshold=float(model.threshold),
-                features=feats, contributions=contributions, explanation=sentence,
-            ))
-    return findings
+    if model.invariant:
+        print("[!] constant on the baseline (any other value will be reported as unseen): "
+              + ", ".join(f"{f}={v:g}" for f, v in model.invariant.items()))
+        print("    Add clean images that exercise these (e.g. a Java/Node.js workload for "
+              "unbacked executable memory) to reduce false positives.")
 
 
 def cmd_analyse(args) -> None:
@@ -67,7 +54,7 @@ def cmd_analyse(args) -> None:
         if not args.model:
             raise SystemExit("--model is required for --mode ml/both")
         model = SPFModel.load(args.model)
-        anomaly_findings = _anomalies(ev, model)
+        anomaly_findings = find_anomalies(ev.tasks_list, model)
 
     report = build_report(ev, rule_findings, anomaly_findings)
     out = Path(args.out)
@@ -87,7 +74,8 @@ def main(argv: list[str] | None = None) -> None:
     t.add_argument("--images", required=True)
     t.add_argument("--symbols", required=True)
     t.add_argument("--out", required=True)
-    t.add_argument("--percentile", type=float, default=99.0)
+    t.add_argument("--percentile", type=float, default=100.0,
+                   help="cutoff = this percentile of clean-baseline scores (default 100: the highest clean score)")
     t.set_defaults(func=cmd_train)
 
     a = sub.add_parser("analyse", help="Analyse one memory image")

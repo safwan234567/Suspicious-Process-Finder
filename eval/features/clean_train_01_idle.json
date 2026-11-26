@@ -1,0 +1,3749 @@
+{
+  "image": "baseline/images/clean_train_01_idle.lime",
+  "extract_seconds": 312.5,
+  "n_processes": 233,
+  "unavailable_plugins": [],
+  "raw_plugin_rows": {
+    "linux.pslist.PsList": 233,
+    "linux.proc.Maps": 22317,
+    "linux.lsof.Lsof": 6243,
+    "linux.sockstat.Sockstat": 2033,
+    "linux.psaux.PsAux": 233,
+    "linux.envars.Envars": 2619,
+    "linux.lsmod.Lsmod": 85,
+    "linux.malware.check_syscall.Check_syscall": 450,
+    "linux.pidhashtable.PIDHashTable": 499,
+    "linux.malware.hidden_modules.Hidden_modules": 0
+  },
+  "rule_findings": [],
+  "processes": [
+    {
+      "pid": 1,
+      "ppid": 0,
+      "comm": "systemd",
+      "features": {
+        "vma_count": 121.0,
+        "anon_to_file_ratio": 0.009076433121019108,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 176.0,
+        "socket_count": 83.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 2,
+      "ppid": 0,
+      "comm": "kthreadd",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 3,
+      "ppid": 2,
+      "comm": "pool_workqueue_",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 4,
+      "ppid": 2,
+      "comm": "kworker/R-rcu_g",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 5,
+      "ppid": 2,
+      "comm": "kworker/R-sync_",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 6,
+      "ppid": 2,
+      "comm": "kworker/R-kvfre",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 7,
+      "ppid": 2,
+      "comm": "kworker/R-slub_",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 8,
+      "ppid": 2,
+      "comm": "kworker/R-netns",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 10,
+      "ppid": 2,
+      "comm": "kworker/0:0H",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 11,
+      "ppid": 2,
+      "comm": "kworker/0:1",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 12,
+      "ppid": 2,
+      "comm": "kworker/u16:0",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 13,
+      "ppid": 2,
+      "comm": "kworker/R-mm_pe",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 14,
+      "ppid": 2,
+      "comm": "ksoftirqd/0",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 15,
+      "ppid": 2,
+      "comm": "rcu_preempt",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 16,
+      "ppid": 2,
+      "comm": "rcu_exp_par_gp_",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 17,
+      "ppid": 2,
+      "comm": "rcu_exp_gp_kthr",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 18,
+      "ppid": 2,
+      "comm": "migration/0",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 19,
+      "ppid": 2,
+      "comm": "idle_inject/0",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 20,
+      "ppid": 2,
+      "comm": "cpuhp/0",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 21,
+      "ppid": 2,
+      "comm": "cpuhp/1",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 22,
+      "ppid": 2,
+      "comm": "idle_inject/1",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 23,
+      "ppid": 2,
+      "comm": "migration/1",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 24,
+      "ppid": 2,
+      "comm": "ksoftirqd/1",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 26,
+      "ppid": 2,
+      "comm": "kworker/1:0H",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 27,
+      "ppid": 2,
+      "comm": "cpuhp/2",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 28,
+      "ppid": 2,
+      "comm": "idle_inject/2",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 29,
+      "ppid": 2,
+      "comm": "migration/2",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 30,
+      "ppid": 2,
+      "comm": "ksoftirqd/2",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 32,
+      "ppid": 2,
+      "comm": "kworker/2:0H",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 33,
+      "ppid": 2,
+      "comm": "cpuhp/3",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 34,
+      "ppid": 2,
+      "comm": "idle_inject/3",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 35,
+      "ppid": 2,
+      "comm": "migration/3",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 36,
+      "ppid": 2,
+      "comm": "ksoftirqd/3",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 38,
+      "ppid": 2,
+      "comm": "kworker/3:0H",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 39,
+      "ppid": 2,
+      "comm": "kworker/u17:0",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 42,
+      "ppid": 2,
+      "comm": "kworker/u18:1",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 43,
+      "ppid": 2,
+      "comm": "kworker/u18:2",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 44,
+      "ppid": 2,
+      "comm": "kdevtmpfs",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 45,
+      "ppid": 2,
+      "comm": "kworker/R-inet_",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 46,
+      "ppid": 2,
+      "comm": "rcu_tasks_kthre",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 47,
+      "ppid": 2,
+      "comm": "rcu_tasks_rude_",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 48,
+      "ppid": 2,
+      "comm": "rcu_tasks_trace",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 49,
+      "ppid": 2,
+      "comm": "kauditd",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 50,
+      "ppid": 2,
+      "comm": "khungtaskd",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 51,
+      "ppid": 2,
+      "comm": "kworker/u17:1",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 52,
+      "ppid": 2,
+      "comm": "oom_reaper",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 54,
+      "ppid": 2,
+      "comm": "kworker/R-write",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 55,
+      "ppid": 2,
+      "comm": "kcompactd0",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 56,
+      "ppid": 2,
+      "comm": "ksmd",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 57,
+      "ppid": 2,
+      "comm": "khugepaged",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 58,
+      "ppid": 2,
+      "comm": "kworker/R-kbloc",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 59,
+      "ppid": 2,
+      "comm": "kworker/R-blkcg",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 60,
+      "ppid": 2,
+      "comm": "kworker/R-kinte",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 61,
+      "ppid": 2,
+      "comm": "irq/9-acpi",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 63,
+      "ppid": 2,
+      "comm": "kworker/1:1",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 64,
+      "ppid": 2,
+      "comm": "kworker/R-tpm_d",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 65,
+      "ppid": 2,
+      "comm": "kworker/R-edac-",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 66,
+      "ppid": 2,
+      "comm": "kworker/R-devfr",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 67,
+      "ppid": 2,
+      "comm": "kworker/3:1",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 68,
+      "ppid": 2,
+      "comm": "kworker/R-quota",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 69,
+      "ppid": 2,
+      "comm": "kworker/2:1H",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 70,
+      "ppid": 2,
+      "comm": "kswapd0",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 71,
+      "ppid": 2,
+      "comm": "kdamond.0",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 74,
+      "ppid": 2,
+      "comm": "kworker/R-kthro",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 75,
+      "ppid": 2,
+      "comm": "irq/24-pciehp",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 76,
+      "ppid": 2,
+      "comm": "irq/25-pciehp",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 77,
+      "ppid": 2,
+      "comm": "irq/26-pciehp",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 78,
+      "ppid": 2,
+      "comm": "irq/27-pciehp",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 79,
+      "ppid": 2,
+      "comm": "irq/28-pciehp",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 80,
+      "ppid": 2,
+      "comm": "irq/29-pciehp",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 81,
+      "ppid": 2,
+      "comm": "irq/30-pciehp",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 82,
+      "ppid": 2,
+      "comm": "irq/31-pciehp",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 83,
+      "ppid": 2,
+      "comm": "irq/32-pciehp",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 84,
+      "ppid": 2,
+      "comm": "irq/33-pciehp",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 85,
+      "ppid": 2,
+      "comm": "irq/34-pciehp",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 86,
+      "ppid": 2,
+      "comm": "irq/35-pciehp",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 87,
+      "ppid": 2,
+      "comm": "irq/36-pciehp",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 88,
+      "ppid": 2,
+      "comm": "irq/37-pciehp",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 89,
+      "ppid": 2,
+      "comm": "irq/38-pciehp",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 90,
+      "ppid": 2,
+      "comm": "irq/39-pciehp",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 91,
+      "ppid": 2,
+      "comm": "irq/40-pciehp",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 92,
+      "ppid": 2,
+      "comm": "irq/41-pciehp",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 93,
+      "ppid": 2,
+      "comm": "irq/42-pciehp",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 94,
+      "ppid": 2,
+      "comm": "irq/43-pciehp",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 95,
+      "ppid": 2,
+      "comm": "irq/44-pciehp",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 96,
+      "ppid": 2,
+      "comm": "irq/45-pciehp",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 97,
+      "ppid": 2,
+      "comm": "irq/46-pciehp",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 98,
+      "ppid": 2,
+      "comm": "irq/47-pciehp",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 99,
+      "ppid": 2,
+      "comm": "irq/48-pciehp",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 100,
+      "ppid": 2,
+      "comm": "irq/49-pciehp",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 101,
+      "ppid": 2,
+      "comm": "irq/50-pciehp",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 102,
+      "ppid": 2,
+      "comm": "irq/51-pciehp",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 103,
+      "ppid": 2,
+      "comm": "irq/52-pciehp",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 104,
+      "ppid": 2,
+      "comm": "irq/53-pciehp",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 105,
+      "ppid": 2,
+      "comm": "irq/54-pciehp",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 106,
+      "ppid": 2,
+      "comm": "irq/55-pciehp",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 107,
+      "ppid": 2,
+      "comm": "kworker/R-acpi_",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 108,
+      "ppid": 2,
+      "comm": "kworker/R-mld",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 110,
+      "ppid": 2,
+      "comm": "kworker/R-ipv6_",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 111,
+      "ppid": 2,
+      "comm": "kworker/u16:1",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 112,
+      "ppid": 2,
+      "comm": "kworker/R-kstrp",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 115,
+      "ppid": 2,
+      "comm": "kworker/u18:3",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 120,
+      "ppid": 2,
+      "comm": "kworker/u19:0",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 121,
+      "ppid": 2,
+      "comm": "kworker/u20:0",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 122,
+      "ppid": 2,
+      "comm": "kworker/u21:0",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 185,
+      "ppid": 2,
+      "comm": "kworker/0:1H",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 213,
+      "ppid": 2,
+      "comm": "kworker/1:1H",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 215,
+      "ppid": 2,
+      "comm": "kworker/3:1H",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 247,
+      "ppid": 2,
+      "comm": "kworker/R-ata_s",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 248,
+      "ppid": 2,
+      "comm": "kworker/R-mpt_p",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 249,
+      "ppid": 2,
+      "comm": "kworker/R-mpt/0",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 250,
+      "ppid": 2,
+      "comm": "scsi_eh_0",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 251,
+      "ppid": 2,
+      "comm": "kworker/R-scsi_",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 252,
+      "ppid": 2,
+      "comm": "scsi_eh_1",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 253,
+      "ppid": 2,
+      "comm": "kworker/R-scsi_",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 274,
+      "ppid": 2,
+      "comm": "irq/16-vmwgfx",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 275,
+      "ppid": 2,
+      "comm": "kworker/R-ttm",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 276,
+      "ppid": 2,
+      "comm": "scsi_eh_2",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 277,
+      "ppid": 2,
+      "comm": "kworker/R-scsi_",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 325,
+      "ppid": 2,
+      "comm": "jbd2/sda1-8",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 326,
+      "ppid": 2,
+      "comm": "kworker/R-ext4-",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 375,
+      "ppid": 2,
+      "comm": "irq/56-vmw_vmci",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 376,
+      "ppid": 2,
+      "comm": "irq/57-vmw_vmci",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 377,
+      "ppid": 2,
+      "comm": "irq/58-vmw_vmci",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 390,
+      "ppid": 1,
+      "comm": "systemd-journal",
+      "features": {
+        "vma_count": 85.0,
+        "anon_to_file_ratio": 0.5873979882330613,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 61.0,
+        "socket_count": 46.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 408,
+      "ppid": 1,
+      "comm": "vmware-vmblock-",
+      "features": {
+        "vma_count": 35.0,
+        "anon_to_file_ratio": 52.62162162162162,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 12.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 410,
+      "ppid": 1,
+      "comm": "systemd-timesyn",
+      "features": {
+        "vma_count": 69.0,
+        "anon_to_file_ratio": 4.596826183982147,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 36.0,
+        "socket_count": 16.0,
+        "uid_differs_from_parent": 1.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 412,
+      "ppid": 1,
+      "comm": "systemd-userdbd",
+      "features": {
+        "vma_count": 59.0,
+        "anon_to_file_ratio": 0.010201542672306545,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 12.0,
+        "socket_count": 4.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 413,
+      "ppid": 1,
+      "comm": "systemd-udevd",
+      "features": {
+        "vma_count": 96.0,
+        "anon_to_file_ratio": 0.004383282364933741,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 17.0,
+        "socket_count": 7.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 417,
+      "ppid": 2,
+      "comm": "psimon",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 441,
+      "ppid": 2,
+      "comm": "psimon",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 542,
+      "ppid": 2,
+      "comm": "jbd2/sda3-8",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 543,
+      "ppid": 2,
+      "comm": "kworker/R-ext4-",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 583,
+      "ppid": 1,
+      "comm": "haveged",
+      "features": {
+        "vma_count": 32.0,
+        "anon_to_file_ratio": 2.2326656394453006,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 5.0,
+        "socket_count": 3.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 612,
+      "ppid": 1,
+      "comm": "vmtoolsd",
+      "features": {
+        "vma_count": 219.0,
+        "anon_to_file_ratio": 4.2446122674525695,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 36.0,
+        "socket_count": 12.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 618,
+      "ppid": 1,
+      "comm": "vmhgfs-fuse",
+      "features": {
+        "vma_count": 114.0,
+        "anon_to_file_ratio": 26.78458765209554,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 20.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 626,
+      "ppid": 1,
+      "comm": "accounts-daemon",
+      "features": {
+        "vma_count": 110.0,
+        "anon_to_file_ratio": 20.945201590005677,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 32.0,
+        "socket_count": 12.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 628,
+      "ppid": 1,
+      "comm": "dbus-daemon",
+      "features": {
+        "vma_count": 80.0,
+        "anon_to_file_ratio": 0.018297533810660304,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 216.0,
+        "socket_count": 51.0,
+        "uid_differs_from_parent": 1.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 647,
+      "ppid": 1,
+      "comm": "polkitd",
+      "features": {
+        "vma_count": 132.0,
+        "anon_to_file_ratio": 26.61096681096681,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 40.0,
+        "socket_count": 8.0,
+        "uid_differs_from_parent": 1.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 651,
+      "ppid": 1,
+      "comm": "systemd-logind",
+      "features": {
+        "vma_count": 77.0,
+        "anon_to_file_ratio": 0.024401265250790782,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 36.0,
+        "socket_count": 10.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 717,
+      "ppid": 1,
+      "comm": "NetworkManager",
+      "features": {
+        "vma_count": 355.0,
+        "anon_to_file_ratio": 7.089800230503266,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 108.0,
+        "socket_count": 52.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 731,
+      "ppid": 1,
+      "comm": "ModemManager",
+      "features": {
+        "vma_count": 425.0,
+        "anon_to_file_ratio": 16.308984789529536,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 44.0,
+        "socket_count": 20.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 947,
+      "ppid": 2,
+      "comm": "kworker/u21:1",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 948,
+      "ppid": 2,
+      "comm": "kworker/u20:1",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 1000,
+      "ppid": 2,
+      "comm": "kworker/R-rpcio",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 1001,
+      "ppid": 2,
+      "comm": "kworker/R-xprti",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 1003,
+      "ppid": 1,
+      "comm": "cron",
+      "features": {
+        "vma_count": 54.0,
+        "anon_to_file_ratio": 0.024404761904761905,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 5.0,
+        "socket_count": 3.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 1095,
+      "ppid": 1,
+      "comm": "lightdm",
+      "features": {
+        "vma_count": 145.0,
+        "anon_to_file_ratio": 29.98211963589077,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 64.0,
+        "socket_count": 16.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 1106,
+      "ppid": 1095,
+      "comm": "Xorg",
+      "features": {
+        "vma_count": 454.0,
+        "anon_to_file_ratio": 1.6534855236204675,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 120.0,
+        "socket_count": 72.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 1107,
+      "ppid": 1,
+      "comm": "agetty",
+      "features": {
+        "vma_count": 39.0,
+        "anon_to_file_ratio": 0.013196480938416423,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 5.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 1160,
+      "ppid": 1,
+      "comm": "rtkit-daemon",
+      "features": {
+        "vma_count": 46.0,
+        "anon_to_file_ratio": 3.2009309542280837,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 24.0,
+        "socket_count": 12.0,
+        "uid_differs_from_parent": 1.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 1307,
+      "ppid": 1095,
+      "comm": "lightdm",
+      "features": {
+        "vma_count": 217.0,
+        "anon_to_file_ratio": 10.402722177742193,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 40.0,
+        "socket_count": 12.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 1336,
+      "ppid": 1,
+      "comm": "systemd",
+      "features": {
+        "vma_count": 102.0,
+        "anon_to_file_ratio": 0.019193857965451054,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 92.0,
+        "socket_count": 30.0,
+        "uid_differs_from_parent": 1.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 1338,
+      "ppid": 1336,
+      "comm": "(sd-pam)",
+      "features": {
+        "vma_count": 163.0,
+        "anon_to_file_ratio": 0.01065340909090909,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 9.0,
+        "socket_count": 5.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 1361,
+      "ppid": 1336,
+      "comm": "dbus-daemon",
+      "features": {
+        "vma_count": 80.0,
+        "anon_to_file_ratio": 0.020655590480466997,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 268.0,
+        "socket_count": 60.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 1362,
+      "ppid": 1336,
+      "comm": "pipewire",
+      "features": {
+        "vma_count": 191.0,
+        "anon_to_file_ratio": 4.425807823129252,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 168.0,
+        "socket_count": 51.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 1364,
+      "ppid": 1336,
+      "comm": "gnome-keyring-d",
+      "features": {
+        "vma_count": 132.0,
+        "anon_to_file_ratio": 8.430421377183967,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 50.0,
+        "socket_count": 30.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 1365,
+      "ppid": 1336,
+      "comm": "mpris-proxy",
+      "features": {
+        "vma_count": 58.0,
+        "anon_to_file_ratio": 0.015995587424158852,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 6.0,
+        "socket_count": 4.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 1366,
+      "ppid": 1336,
+      "comm": "wireplumber",
+      "features": {
+        "vma_count": 387.0,
+        "anon_to_file_ratio": 14.705767223382045,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 270.0,
+        "socket_count": 102.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 1367,
+      "ppid": 1336,
+      "comm": "pipewire",
+      "features": {
+        "vma_count": 99.0,
+        "anon_to_file_ratio": 6.704429920116195,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 30.0,
+        "socket_count": 6.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 1368,
+      "ppid": 1336,
+      "comm": "pipewire-pulse",
+      "features": {
+        "vma_count": 173.0,
+        "anon_to_file_ratio": 4.705733944954129,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 81.0,
+        "socket_count": 36.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 1375,
+      "ppid": 1307,
+      "comm": "xfce4-session",
+      "features": {
+        "vma_count": 512.0,
+        "anon_to_file_ratio": 12.196192052980132,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 287.0,
+        "socket_count": 105.0,
+        "uid_differs_from_parent": 1.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 1457,
+      "ppid": 1336,
+      "comm": "at-spi-bus-laun",
+      "features": {
+        "vma_count": 139.0,
+        "anon_to_file_ratio": 29.45846645367412,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 60.0,
+        "socket_count": 20.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 1464,
+      "ppid": 1457,
+      "comm": "dbus-daemon",
+      "features": {
+        "vma_count": 80.0,
+        "anon_to_file_ratio": 0.02172886159659896,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 111.0,
+        "socket_count": 30.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 1475,
+      "ppid": 1336,
+      "comm": "at-spi2-registr",
+      "features": {
+        "vma_count": 149.0,
+        "anon_to_file_ratio": 11.869591712370505,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 36.0,
+        "socket_count": 20.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 1482,
+      "ppid": 1,
+      "comm": "ssh-agent",
+      "features": {
+        "vma_count": 48.0,
+        "anon_to_file_ratio": 0.011733535200605601,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 4.0,
+        "socket_count": 1.0,
+        "uid_differs_from_parent": 1.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 1491,
+      "ppid": 1336,
+      "comm": "gpg-agent",
+      "features": {
+        "vma_count": 52.0,
+        "anon_to_file_ratio": 18.773652085452696,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 22.0,
+        "socket_count": 12.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 1494,
+      "ppid": 1375,
+      "comm": "xfwm4",
+      "features": {
+        "vma_count": 685.0,
+        "anon_to_file_ratio": 5.100046714419184,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 320.0,
+        "socket_count": 64.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 1499,
+      "ppid": 1336,
+      "comm": "gvfsd",
+      "features": {
+        "vma_count": 144.0,
+        "anon_to_file_ratio": 16.307471264367816,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 40.0,
+        "socket_count": 12.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 1505,
+      "ppid": 1336,
+      "comm": "gvfsd-fuse",
+      "features": {
+        "vma_count": 117.0,
+        "anon_to_file_ratio": 23.153731787094856,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 60.0,
+        "socket_count": 18.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 1536,
+      "ppid": 1375,
+      "comm": "xfsettingsd",
+      "features": {
+        "vma_count": 491.0,
+        "anon_to_file_ratio": 6.189109879360939,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 96.0,
+        "socket_count": 30.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 1542,
+      "ppid": 1336,
+      "comm": "dconf-service",
+      "features": {
+        "vma_count": 96.0,
+        "anon_to_file_ratio": 16.189526184538654,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 28.0,
+        "socket_count": 12.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 1543,
+      "ppid": 1375,
+      "comm": "xfce4-panel",
+      "features": {
+        "vma_count": 593.0,
+        "anon_to_file_ratio": 16.746932423535046,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 175.0,
+        "socket_count": 35.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 1552,
+      "ppid": 1375,
+      "comm": "Thunar",
+      "features": {
+        "vma_count": 488.0,
+        "anon_to_file_ratio": 8.216554543132078,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 60.0,
+        "socket_count": 25.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 1560,
+      "ppid": 1375,
+      "comm": "xfdesktop",
+      "features": {
+        "vma_count": 642.0,
+        "anon_to_file_ratio": 8.886248992627525,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 147.0,
+        "socket_count": 35.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 1565,
+      "ppid": 1543,
+      "comm": "wrapper-2.0",
+      "features": {
+        "vma_count": 562.0,
+        "anon_to_file_ratio": 20.808818080770656,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 105.0,
+        "socket_count": 21.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 1591,
+      "ppid": 1336,
+      "comm": "gvfsd-metadata",
+      "features": {
+        "vma_count": 115.0,
+        "anon_to_file_ratio": 11.786686838124055,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 36.0,
+        "socket_count": 16.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 1611,
+      "ppid": 1543,
+      "comm": "wrapper-2.0",
+      "features": {
+        "vma_count": 495.0,
+        "anon_to_file_ratio": 5.424751345181804,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 50.0,
+        "socket_count": 15.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 1612,
+      "ppid": 1543,
+      "comm": "wrapper-2.0",
+      "features": {
+        "vma_count": 507.0,
+        "anon_to_file_ratio": 9.59697304650965,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 50.0,
+        "socket_count": 15.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 1613,
+      "ppid": 1543,
+      "comm": "wrapper-2.0",
+      "features": {
+        "vma_count": 489.0,
+        "anon_to_file_ratio": 4.905504430811179,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 50.0,
+        "socket_count": 15.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 1614,
+      "ppid": 1543,
+      "comm": "wrapper-2.0",
+      "features": {
+        "vma_count": 614.0,
+        "anon_to_file_ratio": 7.255988982833718,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 119.0,
+        "socket_count": 35.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 1615,
+      "ppid": 1543,
+      "comm": "wrapper-2.0",
+      "features": {
+        "vma_count": 533.0,
+        "anon_to_file_ratio": 20.797167183894327,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 98.0,
+        "socket_count": 21.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 1616,
+      "ppid": 1543,
+      "comm": "wrapper-2.0",
+      "features": {
+        "vma_count": 532.0,
+        "anon_to_file_ratio": 19.317409934930964,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 105.0,
+        "socket_count": 28.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 1628,
+      "ppid": 1543,
+      "comm": "wrapper-2.0",
+      "features": {
+        "vma_count": 533.0,
+        "anon_to_file_ratio": 20.68360240582463,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 98.0,
+        "socket_count": 21.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 1680,
+      "ppid": 1,
+      "comm": "upowerd",
+      "features": {
+        "vma_count": 166.0,
+        "anon_to_file_ratio": 12.439892092395887,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 40.0,
+        "socket_count": 20.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 1707,
+      "ppid": 1336,
+      "comm": "xfce4-notifyd",
+      "features": {
+        "vma_count": 468.0,
+        "anon_to_file_ratio": 10.202617994100295,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 65.0,
+        "socket_count": 25.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 1924,
+      "ppid": 1375,
+      "comm": "xautoresize",
+      "features": {
+        "vma_count": 67.0,
+        "anon_to_file_ratio": 0.019986675549633577,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 5.0,
+        "socket_count": 1.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 1932,
+      "ppid": 1375,
+      "comm": "agent",
+      "features": {
+        "vma_count": 167.0,
+        "anon_to_file_ratio": 14.88299374621747,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 32.0,
+        "socket_count": 8.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 1936,
+      "ppid": 1375,
+      "comm": "polkit-mate-aut",
+      "features": {
+        "vma_count": 403.0,
+        "anon_to_file_ratio": 5.713333333333333,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 55.0,
+        "socket_count": 20.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 1937,
+      "ppid": 1375,
+      "comm": "nm-applet",
+      "features": {
+        "vma_count": 583.0,
+        "anon_to_file_ratio": 19.46815345647742,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 144.0,
+        "socket_count": 32.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 1943,
+      "ppid": 1375,
+      "comm": "applet.py",
+      "features": {
+        "vma_count": 438.0,
+        "anon_to_file_ratio": 0.20635744404800518,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 10.0,
+        "socket_count": 5.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 1953,
+      "ppid": 1,
+      "comm": "vmtoolsd",
+      "features": {
+        "vma_count": 555.0,
+        "anon_to_file_ratio": 4.463679327848766,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 96.0,
+        "socket_count": 30.0,
+        "uid_differs_from_parent": 1.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 1974,
+      "ppid": 1375,
+      "comm": "xfce4-power-man",
+      "features": {
+        "vma_count": 451.0,
+        "anon_to_file_ratio": 8.955631067961166,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 75.0,
+        "socket_count": 25.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 1992,
+      "ppid": 1375,
+      "comm": "blueman-applet",
+      "features": {
+        "vma_count": 612.0,
+        "anon_to_file_ratio": 3.141607000795545,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 114.0,
+        "socket_count": 42.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 2010,
+      "ppid": 1,
+      "comm": "xcape",
+      "features": {
+        "vma_count": 56.0,
+        "anon_to_file_ratio": 1.9438202247191012,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 10.0,
+        "socket_count": 4.0,
+        "uid_differs_from_parent": 1.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 2019,
+      "ppid": 1375,
+      "comm": "xfce4-screensav",
+      "features": {
+        "vma_count": 506.0,
+        "anon_to_file_ratio": 11.31257561739378,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 119.0,
+        "socket_count": 35.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 2030,
+      "ppid": 1375,
+      "comm": "xiccd",
+      "features": {
+        "vma_count": 180.0,
+        "anon_to_file_ratio": 58.09223880597015,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 40.0,
+        "socket_count": 12.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 2069,
+      "ppid": 1,
+      "comm": "colord",
+      "features": {
+        "vma_count": 172.0,
+        "anon_to_file_ratio": 13.485933503836318,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 64.0,
+        "socket_count": 32.0,
+        "uid_differs_from_parent": 1.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 2216,
+      "ppid": 1336,
+      "comm": "gvfs-udisks2-vo",
+      "features": {
+        "vma_count": 216.0,
+        "anon_to_file_ratio": 23.438895950608316,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 70.0,
+        "socket_count": 25.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 2225,
+      "ppid": 1336,
+      "comm": "obexd",
+      "features": {
+        "vma_count": 414.0,
+        "anon_to_file_ratio": 2.666081028848519,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 75.0,
+        "socket_count": 40.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 2229,
+      "ppid": 1,
+      "comm": "udisksd",
+      "features": {
+        "vma_count": 328.0,
+        "anon_to_file_ratio": 16.239481268011527,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 133.0,
+        "socket_count": 35.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 2243,
+      "ppid": 1336,
+      "comm": "gvfs-goa-volume",
+      "features": {
+        "vma_count": 104.0,
+        "anon_to_file_ratio": 22.775239271380055,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 28.0,
+        "socket_count": 12.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 2248,
+      "ppid": 1336,
+      "comm": "gvfs-gphoto2-vo",
+      "features": {
+        "vma_count": 136.0,
+        "anon_to_file_ratio": 21.777712264150942,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 32.0,
+        "socket_count": 16.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 2259,
+      "ppid": 1336,
+      "comm": "gvfs-afc-volume",
+      "features": {
+        "vma_count": 138.0,
+        "anon_to_file_ratio": 17.437405446293496,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 40.0,
+        "socket_count": 15.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 2265,
+      "ppid": 1336,
+      "comm": "gvfs-mtp-volume",
+      "features": {
+        "vma_count": 113.0,
+        "anon_to_file_ratio": 22.705755617112956,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 32.0,
+        "socket_count": 16.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 2278,
+      "ppid": 1499,
+      "comm": "gvfsd-trash",
+      "features": {
+        "vma_count": 156.0,
+        "anon_to_file_ratio": 28.194408038444735,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 65.0,
+        "socket_count": 20.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 2555,
+      "ppid": 1,
+      "comm": "qterminal",
+      "features": {
+        "vma_count": 703.0,
+        "anon_to_file_ratio": 4.93560406031802,
+        "unbacked_exec_count": 1.0,
+        "unbacked_exec_bytes": 65536.0,
+        "fd_count": 189.0,
+        "socket_count": 49.0,
+        "uid_differs_from_parent": 1.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 2558,
+      "ppid": 1336,
+      "comm": "xdg-desktop-por",
+      "features": {
+        "vma_count": 404.0,
+        "anon_to_file_ratio": 14.39229268292683,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 150.0,
+        "socket_count": 42.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 2564,
+      "ppid": 1336,
+      "comm": "xdg-permission-",
+      "features": {
+        "vma_count": 110.0,
+        "anon_to_file_ratio": 21.332851359167147,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 28.0,
+        "socket_count": 12.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 2572,
+      "ppid": 1336,
+      "comm": "xdg-document-po",
+      "features": {
+        "vma_count": 123.0,
+        "anon_to_file_ratio": 36.40315876974231,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 91.0,
+        "socket_count": 28.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 2578,
+      "ppid": 2572,
+      "comm": "fusermount3",
+      "features": {
+        "vma_count": 24.0,
+        "anon_to_file_ratio": 0.04006410256410257,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 4.0,
+        "socket_count": 1.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 2583,
+      "ppid": 1336,
+      "comm": "xdg-desktop-por",
+      "features": {
+        "vma_count": 416.0,
+        "anon_to_file_ratio": 10.671841851494696,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 78.0,
+        "socket_count": 36.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 2590,
+      "ppid": 2555,
+      "comm": "zsh",
+      "features": {
+        "vma_count": 85.0,
+        "anon_to_file_ratio": 0.019043917605907502,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 7.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 3273,
+      "ppid": 1,
+      "comm": "vmhgfs-fuse",
+      "features": {
+        "vma_count": 126.0,
+        "anon_to_file_ratio": 87.84489986027015,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 48.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 3621,
+      "ppid": 2,
+      "comm": "psimon",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 3624,
+      "ppid": 1,
+      "comm": "sshd",
+      "features": {
+        "vma_count": 60.0,
+        "anon_to_file_ratio": 0.01621808143547274,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 8.0,
+        "socket_count": 4.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 5322,
+      "ppid": 2,
+      "comm": "kworker/2:0",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 19230,
+      "ppid": 2,
+      "comm": "kworker/u17:2",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 21670,
+      "ppid": 2,
+      "comm": "kworker/2:1",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 21903,
+      "ppid": 2,
+      "comm": "kworker/3:0",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 22160,
+      "ppid": 2,
+      "comm": "kworker/1:0",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 22529,
+      "ppid": 2,
+      "comm": "kworker/0:0",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 24004,
+      "ppid": 412,
+      "comm": "systemd-userwor",
+      "features": {
+        "vma_count": 65.0,
+        "anon_to_file_ratio": 0.009985734664764621,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 6.0,
+        "socket_count": 4.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 24005,
+      "ppid": 412,
+      "comm": "systemd-userwor",
+      "features": {
+        "vma_count": 65.0,
+        "anon_to_file_ratio": 0.009985734664764621,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 6.0,
+        "socket_count": 4.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 24006,
+      "ppid": 412,
+      "comm": "systemd-userwor",
+      "features": {
+        "vma_count": 65.0,
+        "anon_to_file_ratio": 0.009985734664764621,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 6.0,
+        "socket_count": 4.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 24298,
+      "ppid": 2,
+      "comm": "kworker/2:2",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 24433,
+      "ppid": 3624,
+      "comm": "sshd-session",
+      "features": {
+        "vma_count": 225.0,
+        "anon_to_file_ratio": 0.013189935064935064,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 10.0,
+        "socket_count": 4.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 24440,
+      "ppid": 24433,
+      "comm": "sshd-session",
+      "features": {
+        "vma_count": 226.0,
+        "anon_to_file_ratio": 0.026379870129870128,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 12.0,
+        "socket_count": 4.0,
+        "uid_differs_from_parent": 1.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 24441,
+      "ppid": 24440,
+      "comm": "sudo",
+      "features": {
+        "vma_count": 154.0,
+        "anon_to_file_ratio": 0.01141826923076923,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 8.0,
+        "socket_count": 2.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 24443,
+      "ppid": 24441,
+      "comm": "bash",
+      "features": {
+        "vma_count": 32.0,
+        "anon_to_file_ratio": 0.021010789324247586,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 4.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 1.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 24458,
+      "ppid": 24443,
+      "comm": "insmod",
+      "features": {
+        "vma_count": 40.0,
+        "anon_to_file_ratio": 0.011033919084593379,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 4.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 24603,
+      "ppid": 2,
+      "comm": "kworker/3:2",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    },
+    {
+      "pid": 25180,
+      "ppid": 2,
+      "comm": "kworker/0:2",
+      "features": {
+        "vma_count": 0.0,
+        "anon_to_file_ratio": 0.0,
+        "unbacked_exec_count": 0.0,
+        "unbacked_exec_bytes": 0.0,
+        "fd_count": 0.0,
+        "socket_count": 0.0,
+        "uid_differs_from_parent": 0.0,
+        "runs_from_tmp_or_shm": 0.0,
+        "has_ld_preload": 0.0
+      }
+    }
+  ]
+}

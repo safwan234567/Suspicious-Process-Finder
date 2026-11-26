@@ -23,7 +23,14 @@ def build_features(proc: Process, parent_uid: int | None) -> dict[str, float]:
     anon = sum(v.size for v in proc.vmas if v.file_path is None)
     file_backed = sum(v.size for v in proc.vmas if v.file_path is not None)
     unbacked_exec = [v for v in proc.vmas if v.is_executable and v.file_path is None]
-    exe = proc.exe_path or ""
+
+    # runs_from_tmp_or_shm: argv[0] is attacker-controlled and often relative, so
+    # also check where the process's executable code is actually mapped from.
+    # The real binary appears as an executable file-backed VMA; that path cannot
+    # be spoofed the way argv[0] can.
+    candidates = [proc.exe_path or ""]
+    candidates += [v.file_path for v in proc.vmas if v.is_executable and v.file_path]
+    from_suspicious = any(str(c).startswith(SUSPICIOUS_DIRS) for c in candidates)
 
     return {
         "vma_count": float(len(proc.vmas)),
@@ -33,7 +40,7 @@ def build_features(proc: Process, parent_uid: int | None) -> dict[str, float]:
         "fd_count": float(proc.fd_count),
         "socket_count": float(len(proc.sockets)),
         "uid_differs_from_parent": float(parent_uid is not None and proc.uid != parent_uid),
-        "runs_from_tmp_or_shm": float(exe.startswith(SUSPICIOUS_DIRS)),
+        "runs_from_tmp_or_shm": float(from_suspicious),
         "has_ld_preload": float("LD_PRELOAD" in proc.envars),
     }
 

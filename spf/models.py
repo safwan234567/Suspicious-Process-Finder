@@ -56,11 +56,13 @@ class MemoryEvidence:
 
     image_path: str
     tasks_list: list[Process]                 # processes from the tasks linked list
-    pid_hash_pids: set[int]                   # PIDs found in the PID hash table
+    pid_hash_pids: set[int] | None            # PIDs in the PID hash table; None = plugin unavailable
     registered_modules: list[KernelModule]    # modules in the registered module list
     memory_modules: list[KernelModule]        # modules found in memory
     syscall_table: list[SyscallEntry]
-    kernel_text: tuple[int, int] = (0, 0)     # (start, end) of kernel code
+    kernel_text: tuple[int, int] | None = None  # (start, end) of kernel code; None = unknown
+    unavailable_plugins: list[str] = field(default_factory=list)  # plugins that failed or returned no data
+    raw_plugin_rows: dict = field(default_factory=dict)           # plugin name -> rows (manual-triage burden)
 
 
 @dataclass
@@ -83,3 +85,5 @@ class AnomalyFinding:
     features: dict[str, float]
     contributions: dict[str, float] = field(default_factory=dict)  # TreeSHAP values
     explanation: str = ""
+    novel_features: list[str] = field(default_factory=list)  # values never seen on the clean baseline
+    reason: str = "score"  # "score" (above cutoff) or "novelty" (unseen baseline value)

@@ -1,3 +1,6 @@
+# Binaries and executables
+*.exe
+
 # Memory images and symbol tables (too large for git)
 *.raw
 *.lime
@@ -12,6 +15,19 @@ baseline/models/*
 !baseline/models/.gitkeep
 eval/results/*
 !eval/results/.gitkeep
+# evaluation metrics and comparisons
+!eval/results/metrics.json
+!eval/results/algorithm_comparison.json
+!eval/results/algorithm_comparison.md
+!eval/results/triage_reduction.json
+!eval/results/chkrootkit_live_output.txt
+# per-image reports from the real 6.18 evaluation (run_experiments.py)
+!eval/results/clean_test_02_all.json
+!eval/results/clean_test_02_all.html
+!eval/results/diamorphine.json
+!eval/results/diamorphine.html
+!eval/results/userland_malware.json
+!eval/results/userland_malware.html
 report*.json
 report*.html
 

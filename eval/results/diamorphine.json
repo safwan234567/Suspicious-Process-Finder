@@ -1,0 +1,109 @@
+{
+  "image": "eval\\images\\infected\\diamorphine.lime",
+  "summary": {
+    "processes_analysed": 238,
+    "rule_findings": 4,
+    "anomalies": 0,
+    "checks_skipped": 0
+  },
+  "checks_skipped": [],
+  "flagged_processes": [
+    {
+      "pid": 2486,
+      "comm": null,
+      "ppid": null,
+      "parent_comm": null,
+      "task_offset": null,
+      "exe_path": null,
+      "cmdline": null,
+      "connections": [],
+      "ancestry": [],
+      "rule_findings": [
+        {
+          "rule": "DKOM_HIDDEN_PROCESS",
+          "description": "PID 2486 is in the PID hash table but unlinked from the task list",
+          "evidence": {}
+        }
+      ],
+      "anomaly": null
+    },
+    {
+      "pid": null,
+      "comm": "<kernel>",
+      "ppid": null,
+      "rule_findings": [
+        {
+          "rule": "HIDDEN_KERNEL_MODULE",
+          "description": "Module 'diamorphine' at 0xffffc0d60180 is in memory but not in the module list",
+          "evidence": {
+            "name": "diamorphine",
+            "base": 281473916993920,
+            "size": 16384
+          }
+        },
+        {
+          "rule": "HOOKED_SYSCALL",
+          "description": "Syscall 62 points to 0xffffc0b6d6d0, outside the kernel and registered modules",
+          "evidence": {
+            "index": 62,
+            "address": 281473914951376,
+            "symbol": null
+          }
+        },
+        {
+          "rule": "HOOKED_SYSCALL",
+          "description": "Syscall 217 points to 0xffffc0b6d370, outside the kernel and registered modules",
+          "evidence": {
+            "index": 217,
+            "address": 281473914950512,
+            "symbol": null
+          }
+        }
+      ],
+      "anomaly": null
+    }
+  ],
+  "rule_findings": [
+    {
+      "rule": "DKOM_HIDDEN_PROCESS",
+      "description": "PID 2486 is in the PID hash table but unlinked from the task list",
+      "pid": 2486,
+      "comm": null,
+      "evidence": {}
+    },
+    {
+      "rule": "HIDDEN_KERNEL_MODULE",
+      "description": "Module 'diamorphine' at 0xffffc0d60180 is in memory but not in the module list",
+      "pid": null,
+      "comm": null,
+      "evidence": {
+        "name": "diamorphine",
+        "base": 281473916993920,
+        "size": 16384
+      }
+    },
+    {
+      "rule": "HOOKED_SYSCALL",
+      "description": "Syscall 62 points to 0xffffc0b6d6d0, outside the kernel and registered modules",
+      "pid": null,
+      "comm": null,
+      "evidence": {
+        "index": 62,
+        "address": 281473914951376,
+        "symbol": null
+      }
+    },
+    {
+      "rule": "HOOKED_SYSCALL",
+      "description": "Syscall 217 points to 0xffffc0b6d370, outside the kernel and registered modules",
+      "pid": null,
+      "comm": null,
+      "evidence": {
+        "index": 217,
+        "address": 281473914950512,
+        "symbol": null
+      }
+    }
+  ],
+  "anomalies": []
+}

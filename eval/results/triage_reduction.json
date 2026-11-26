@@ -1,0 +1,68 @@
+{
+  "note": "raw rows = lines an analyst reads across all plugin tables; SPF findings = ranked, explained results (rules + ML)",
+  "images": [
+    {
+      "image": "diamorphine",
+      "scenario": "Diamorphine rootkit (kernel)",
+      "raw_plugin_rows_total": 32585,
+      "raw_rows_by_plugin": {
+        "linux.pslist.PsList": 238,
+        "linux.proc.Maps": 21009,
+        "linux.lsof.Lsof": 5748,
+        "linux.sockstat.Sockstat": 1882,
+        "linux.psaux.PsAux": 238,
+        "linux.envars.Envars": 2444,
+        "linux.lsmod.Lsmod": 85,
+        "linux.malware.check_syscall.Check_syscall": 450,
+        "linux.pidhashtable.PIDHashTable": 490,
+        "linux.malware.hidden_modules.Hidden_modules": 1
+      },
+      "spf_rule_findings": 4,
+      "spf_ml_findings": 0,
+      "spf_findings_total": 4,
+      "reduction_factor": 8146.2
+    },
+    {
+      "image": "userland_malware",
+      "scenario": "Userland agent (/dev/shm + LD_PRELOAD)",
+      "raw_plugin_rows_total": 62052,
+      "raw_rows_by_plugin": {
+        "linux.pslist.PsList": 260,
+        "linux.proc.Maps": 29361,
+        "linux.lsof.Lsof": 22479,
+        "linux.sockstat.Sockstat": 5884,
+        "linux.psaux.PsAux": 260,
+        "linux.envars.Envars": 3271,
+        "linux.lsmod.Lsmod": 87,
+        "linux.malware.check_syscall.Check_syscall": 450,
+        "linux.pidhashtable.PIDHashTable": 0,
+        "linux.malware.hidden_modules.Hidden_modules": 0
+      },
+      "spf_rule_findings": 0,
+      "spf_ml_findings": 2,
+      "spf_findings_total": 2,
+      "reduction_factor": 31026.0
+    },
+    {
+      "image": "clean_test_02_all",
+      "scenario": "Clean, busy workload",
+      "raw_plugin_rows_total": 59908,
+      "raw_rows_by_plugin": {
+        "linux.pslist.PsList": 254,
+        "linux.proc.Maps": 29752,
+        "linux.lsof.Lsof": 20204,
+        "linux.sockstat.Sockstat": 5314,
+        "linux.psaux.PsAux": 254,
+        "linux.envars.Envars": 3594,
+        "linux.lsmod.Lsmod": 86,
+        "linux.malware.check_syscall.Check_syscall": 450,
+        "linux.pidhashtable.PIDHashTable": 0,
+        "linux.malware.hidden_modules.Hidden_modules": 0
+      },
+      "spf_rule_findings": 0,
+      "spf_ml_findings": 1,
+      "spf_findings_total": 1,
+      "reduction_factor": 59908.0
+    }
+  ]
+}

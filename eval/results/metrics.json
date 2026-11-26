@@ -1,0 +1,225 @@
+{
+  "summary": {
+    "rules": {
+      "process_level": {
+        "tp": 1,
+        "fp": 0,
+        "malicious_total": 2,
+        "detection_rate": 0.5,
+        "fp_per_image": 0.0
+      },
+      "kernel_rootkit_level": {
+        "tp": 3,
+        "fp": 0,
+        "malicious_total": 3,
+        "detection_rate": 1.0,
+        "fp_per_image": 0.0
+      },
+      "overall_indicators": {
+        "tp": 4,
+        "fp": 0,
+        "malicious_total": 5,
+        "detection_rate": 0.8,
+        "fp_per_image": 0.0
+      },
+      "avg_runtime_s": 286.2,
+      "total_images": 3
+    },
+    "ml": {
+      "process_level": {
+        "tp": 1,
+        "fp": 2,
+        "malicious_total": 2,
+        "detection_rate": 0.5,
+        "fp_per_image": 0.6667
+      },
+      "kernel_rootkit_level": {
+        "tp": 0,
+        "fp": 0,
+        "malicious_total": 3,
+        "detection_rate": 0.0,
+        "fp_per_image": 0.0
+      },
+      "overall_indicators": {
+        "tp": 1,
+        "fp": 2,
+        "malicious_total": 5,
+        "detection_rate": 0.2,
+        "fp_per_image": 0.6667
+      },
+      "avg_runtime_s": 286.2,
+      "total_images": 3
+    },
+    "both": {
+      "process_level": {
+        "tp": 2,
+        "fp": 2,
+        "malicious_total": 2,
+        "detection_rate": 1.0,
+        "fp_per_image": 0.6667
+      },
+      "kernel_rootkit_level": {
+        "tp": 3,
+        "fp": 0,
+        "malicious_total": 3,
+        "detection_rate": 1.0,
+        "fp_per_image": 0.0
+      },
+      "overall_indicators": {
+        "tp": 5,
+        "fp": 2,
+        "malicious_total": 5,
+        "detection_rate": 1.0,
+        "fp_per_image": 0.6667
+      },
+      "avg_runtime_s": 286.2,
+      "total_images": 3
+    }
+  },
+  "per_image": [
+    {
+      "image": "eval/images/clean/clean_test_02_all.lime",
+      "ground_truth": {
+        "malicious_pids": [],
+        "hidden_modules": [],
+        "hooked_syscalls": []
+      },
+      "detections": {
+        "rules": {
+          "detected_pids": [],
+          "detected_modules": [],
+          "detected_syscalls": [],
+          "pid_tp": 0,
+          "pid_fp": 0,
+          "kernel_tp": 0,
+          "kernel_fp": 0
+        },
+        "ml": {
+          "detected_pids": [
+            30134
+          ],
+          "detected_modules": [],
+          "detected_syscalls": [],
+          "pid_tp": 0,
+          "pid_fp": 1,
+          "kernel_tp": 0,
+          "kernel_fp": 0
+        },
+        "both": {
+          "detected_pids": [
+            30134
+          ],
+          "detected_modules": [],
+          "detected_syscalls": [],
+          "pid_tp": 0,
+          "pid_fp": 1,
+          "kernel_tp": 0,
+          "kernel_fp": 0
+        }
+      }
+    },
+    {
+      "image": "eval/images/infected/diamorphine.lime",
+      "ground_truth": {
+        "malicious_pids": [
+          2486
+        ],
+        "hidden_modules": [
+          "diamorphine"
+        ],
+        "hooked_syscalls": [
+          "__x64_sys_getdents64",
+          "__x64_sys_kill"
+        ]
+      },
+      "detections": {
+        "rules": {
+          "detected_pids": [
+            2486
+          ],
+          "detected_modules": [
+            "diamorphine"
+          ],
+          "detected_syscalls": [
+            "__x64_sys_getdents64",
+            "__x64_sys_kill"
+          ],
+          "pid_tp": 1,
+          "pid_fp": 0,
+          "kernel_tp": 3,
+          "kernel_fp": 0
+        },
+        "ml": {
+          "detected_pids": [],
+          "detected_modules": [],
+          "detected_syscalls": [],
+          "pid_tp": 0,
+          "pid_fp": 0,
+          "kernel_tp": 0,
+          "kernel_fp": 0
+        },
+        "both": {
+          "detected_pids": [
+            2486
+          ],
+          "detected_modules": [
+            "diamorphine"
+          ],
+          "detected_syscalls": [
+            "__x64_sys_getdents64",
+            "__x64_sys_kill"
+          ],
+          "pid_tp": 1,
+          "pid_fp": 0,
+          "kernel_tp": 3,
+          "kernel_fp": 0
+        }
+      }
+    },
+    {
+      "image": "eval/images/infected/userland_malware.lime",
+      "ground_truth": {
+        "malicious_pids": [
+          2508
+        ],
+        "hidden_modules": [],
+        "hooked_syscalls": []
+      },
+      "detections": {
+        "rules": {
+          "detected_pids": [],
+          "detected_modules": [],
+          "detected_syscalls": [],
+          "pid_tp": 0,
+          "pid_fp": 0,
+          "kernel_tp": 0,
+          "kernel_fp": 0
+        },
+        "ml": {
+          "detected_pids": [
+            2508,
+            2619
+          ],
+          "detected_modules": [],
+          "detected_syscalls": [],
+          "pid_tp": 1,
+          "pid_fp": 1,
+          "kernel_tp": 0,
+          "kernel_fp": 0
+        },
+        "both": {
+          "detected_pids": [
+            2508,
+            2619
+          ],
+          "detected_modules": [],
+          "detected_syscalls": [],
+          "pid_tp": 1,
+          "pid_fp": 1,
+          "kernel_tp": 0,
+          "kernel_fp": 0
+        }
+      }
+    }
+  ]
+}

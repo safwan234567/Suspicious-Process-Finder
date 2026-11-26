@@ -32,20 +32,50 @@ python -m venv .venv
 pip install -e ".[dev]"
 ```
 
-## Usage (planned)
+Full instructions, including capturing an image and building the Volatility
+symbol table, are in [docs/USER_MANUAL.txt](docs/USER_MANUAL.txt).
+
+## Usage
 
 ```bash
+# see every stage with no memory image
+python examples/demo_report.py          # -> examples/out/report.html
+
+# train the model on clean baseline images
 spf train   --images baseline/images --symbols symbols --out baseline/models/spf.joblib
-spf analyse --image eval/images/infected/sample.lime --symbols symbols --model baseline/models/spf.joblib --mode both
+
+# analyse an image (rules, ml, or both)
+spf analyse --image eval/images/infected/diamorphine.lime --symbols symbols \
+            --model baseline/models/spf.joblib --mode both --out report.json
 ```
 
-`--mode` selects the three evaluation setups: `rules`, `ml` or `both`.
+`--mode` selects `rules`, `ml` or `both`. The report lists each flagged process
+with its findings, memory offset and connections; see the manual for how to read
+it.
 
-## Evaluation plan
+## Evaluation
 
-- Clean images: Linux VMs running typical server workloads, including JIT processes (Java, Node.js, a web browser).
-- Infected images: the same VMs infected with Diamorphine, Reptile and memory-injection scripts, with every malicious artefact recorded in `eval/ground_truth.yaml`.
-- Metrics: detection rate, false-positive rate and run time for rules only, ML only, and both combined.
+Evaluated on real memory images captured from Kali `6.18.12+kali-amd64` (idle,
+Java/Node JIT and Firefox clean baselines; Diamorphine rootkit; a `/dev/shm` +
+`LD_PRELOAD` userland agent). Per-process feature vectors are cached in
+`eval/features/`, so the experiments reproduce in seconds without the images:
+
+```bash
+python eval/run_experiments.py    --features eval/features --model baseline/models/spf.joblib
+python eval/compare_algorithms.py --features eval/features     # IF vs One-Class SVM vs LOF
+python eval/compare_vs_raw.py     --features eval/features --model baseline/models/spf.joblib
+```
+
+Headline results (full detail in `eval/results/` and `PROGRESS.txt`):
+
+- Combined rules + ML: **5/5 ground-truth indicators, 0.33 false positives/image**.
+- The rule stage finds all three Diamorphine indicators with zero false
+  positives; the ML stage catches the userland agent the rules cannot see.
+- Algorithm comparison confirms the design choice: Isolation Forest (with SPF's
+  augmentation) detects with ~0 false positives, while One-Class SVM and LOF do
+  not — backing the proposal's Annex A with evidence.
+- SPF reduces tens of thousands of raw Volatility plugin rows to a handful of
+  ranked, explained findings (8,000–31,000x fewer items to review).
 
 ## Team
 

@@ -38,14 +38,22 @@ from spf.models import (
     VMA,
 )
 
+from spf.rules.checks import HIDDEN_MODULES_PLUGIN, PIDHASH_PLUGIN, SYSCALL_PLUGIN
+
 SUPPORTED_FORMATS = {".raw", ".lime"}
 
 
 def _col(row: dict, *names, default=None):
-    """Return the first present column from several candidate spellings."""
+    """Return the first present column from several candidate spellings.
+
+    Matching is case-insensitive: Volatility renames columns between releases
+    (e.g. linux.envars.Envars uses KEY/VALUE in 2.28), and a silent miss here
+    turns a feature such as has_ld_preload into a constant 0."""
+    lower = {k.lower(): k for k in row}
     for n in names:
-        if n in row and row[n] not in (None, "-"):
-            return row[n]
+        k = n if n in row else lower.get(n.lower())
+        if k is not None and row[k] not in (None, "-"):
+            return row[k]
     return default
 
 
@@ -60,18 +68,28 @@ def build_context(image_path: str, symbols_dir) -> object:
     """Build one Volatility context for an image. The layers are stacked lazily
     on the first plugin run and then reused, so all plugins in extract() share
     the single expensive scan instead of repeating it."""
+    try:
+        import volatility3.framework.symbols.linux.extensions.network  # noqa: F401
+    except ImportError:
+        pass
     import volatility3.symbols
+    import volatility3.framework.layers
     from volatility3 import framework, plugins
-    from volatility3.framework import contexts
+    from volatility3.framework import contexts, automagic
+    from volatility3.framework.configuration import requirements
 
     framework.import_files(plugins, True)
+    framework.import_files(volatility3.framework.layers)
+    framework.import_files(automagic)
     if symbols_dir:
         sp = str(Path(symbols_dir).resolve())
         if sp not in volatility3.symbols.__path__:
             volatility3.symbols.__path__ = [sp] + list(volatility3.symbols.__path__)
 
     ctx = contexts.Context()
-    ctx.config["automagic.LayerStacker.single_location"] = "file://" + str(Path(image_path).resolve())
+    ctx.config["automagic.LayerStacker.single_location"] = requirements.URIRequirement.location_from_file(
+        str(Path(image_path).resolve())
+    )
     return ctx
 
 
@@ -116,22 +134,23 @@ def _run_plugin(image_path: str, symbols_dir, plugin_name: str) -> tuple[list[di
     return run_plugin(ctx, plugin_name), ctx
 
 
-def _safe(image_path: str, symbols_dir, plugin_name: str) -> list[dict]:
+def _safe(image_path: str, symbols_dir, plugin_name: str, failed: list[str]) -> list[dict]:
     """Run one plugin and return its rows, or [] if it fails, so one bad plugin
-    does not abort the whole extraction."""
+    does not abort the whole extraction. Failed plugins are appended to
+    `failed` so the report can say which checks were affected."""
     try:
         rows, _ = _run_plugin(image_path, symbols_dir, plugin_name)
         return rows
     except Exception as exc:  # noqa: BLE001
         sys.stderr.write(f"[spf.extraction] {plugin_name} skipped: {exc!r}\n")
+        failed.append(plugin_name)
         return []
 
 
-def _kernel_text(ctx) -> tuple[int, int]:
-    """Best-effort (start, end) of the kernel code section, needed by the
-    hooked-syscall rule. Tries common kernel symbols; returns (0, 0) if it
-    cannot resolve them (in which case confirm manually before trusting the
-    syscall-hook rule, since (0, 0) would over-flag)."""
+def _kernel_text(ctx) -> tuple[int, int] | None:
+    """(start, end) of the kernel code section, needed by the hooked-syscall
+    rule. Tries common kernel symbols. Returns None and prints a warning if
+    none resolve, so the rule is skipped instead of flagging every syscall."""
     try:
         kernel = ctx.modules[next(iter(ctx.modules))]
         for lo, hi in (("_stext", "_etext"), ("_text", "_end")):
@@ -144,7 +163,12 @@ def _kernel_text(ctx) -> tuple[int, int]:
                 continue
     except Exception:
         pass
-    return (0, 0)  # TODO confirm against the image if syscall-hook results look noisy
+    sys.stderr.write(
+        "[spf.extraction] WARNING: could not resolve the kernel code range "
+        "(_stext/_etext or _text/_end). The hooked-syscall rule will be skipped "
+        "for this image. Check that the symbol table matches the image's kernel.\n"
+    )
+    return None
 
 
 def extract(image_path: str | Path, symbols_dir: str | Path) -> MemoryEvidence:
@@ -154,16 +178,35 @@ def extract(image_path: str | Path, symbols_dir: str | Path) -> MemoryEvidence:
 
     # One fresh context per plugin (see _run_plugin docstring). Each plugin is
     # wrapped so a single failure skips that plugin instead of aborting.
+    failed: list[str] = []
     pslist, ctx = _run_plugin(image_path, symbols_dir, "linux.pslist.PsList")
-    maps = _safe(image_path, symbols_dir, "linux.proc.Maps")
-    lsof = _safe(image_path, symbols_dir, "linux.lsof.Lsof")
-    sockstat = _safe(image_path, symbols_dir, "linux.sockstat.Sockstat")
-    psaux = _safe(image_path, symbols_dir, "linux.psaux.PsAux")
-    envars = _safe(image_path, symbols_dir, "linux.envars.Envars")
-    lsmod = _safe(image_path, symbols_dir, "linux.lsmod.Lsmod")
-    syscalls = _safe(image_path, symbols_dir, "linux.malware.check_syscall.Check_syscall")
-    pidhash = _safe(image_path, symbols_dir, "linux.pidhashtable.PIDHashTable")
-    hidden = _safe(image_path, symbols_dir, "linux.malware.hidden_modules.Hidden_modules")
+    maps = _safe(image_path, symbols_dir, "linux.proc.Maps", failed)
+    lsof = _safe(image_path, symbols_dir, "linux.lsof.Lsof", failed)
+    sockstat = _safe(image_path, symbols_dir, "linux.sockstat.Sockstat", failed)
+    psaux = _safe(image_path, symbols_dir, "linux.psaux.PsAux", failed)
+    envars = _safe(image_path, symbols_dir, "linux.envars.Envars", failed)
+    lsmod = _safe(image_path, symbols_dir, "linux.lsmod.Lsmod", failed)
+    syscalls = _safe(image_path, symbols_dir, SYSCALL_PLUGIN, failed)
+    pidhash = _safe(image_path, symbols_dir, PIDHASH_PLUGIN, failed)
+    hidden = _safe(image_path, symbols_dir, HIDDEN_MODULES_PLUGIN, failed)
+
+    # Raw rows per plugin: the lines an analyst would read by hand across these
+    # separate plugin tables. Used by eval/compare_vs_raw.py to quantify how much
+    # manual triage SPF removes.
+    raw_plugin_rows = {
+        "linux.pslist.PsList": len(pslist), "linux.proc.Maps": len(maps),
+        "linux.lsof.Lsof": len(lsof), "linux.sockstat.Sockstat": len(sockstat),
+        "linux.psaux.PsAux": len(psaux), "linux.envars.Envars": len(envars),
+        "linux.lsmod.Lsmod": len(lsmod), SYSCALL_PLUGIN: len(syscalls),
+        PIDHASH_PLUGIN: len(pidhash), HIDDEN_MODULES_PLUGIN: len(hidden),
+    }
+
+    # A live kernel always has PIDs and syscall entries, so an empty result
+    # means the plugin did not work even if it raised no error.
+    for name, rows in ((PIDHASH_PLUGIN, pidhash), (SYSCALL_PLUGIN, syscalls)):
+        if not rows and name not in failed:
+            sys.stderr.write(f"[spf.extraction] {name} returned no rows; treating it as unavailable\n")
+            failed.append(name)
 
     # --- per-pid VMAs ---
     vmas_by_pid: dict[int, list[VMA]] = {}
@@ -190,9 +233,10 @@ def extract(image_path: str | Path, symbols_dir: str | Path) -> MemoryEvidence:
     exe_by_pid: dict[int, str] = {}
     for r in psaux:
         pid = _int(_col(r, "PID", "Pid"))
-        args = str(_col(r, "Args", "COMM", "Command", default=""))
+        args = str(_col(r, "ARGS", "Args", "COMM", "Command", default=""))
         cmd_by_pid[pid] = args
-        exe_by_pid[pid] = args.split()[0] if args else ""
+        parts = args.split()
+        exe_by_pid[pid] = parts[0] if parts else ""
 
     env_by_pid: dict[int, dict[str, str]] = {}
     for r in envars:
@@ -220,21 +264,23 @@ def extract(image_path: str | Path, symbols_dir: str | Path) -> MemoryEvidence:
             sockets=sockets_by_pid.get(pid, []),
         ))
 
-    pid_hash_pids = {_int(_col(r, "PID", "Pid")) for r in pidhash} or {p.pid for p in tasks}
+    # No fallback to the task list: comparing the task list with itself would
+    # make the DKOM rule silently blind. None tells the rule to skip instead.
+    pid_hash_pids = {_int(_col(r, "PID", "Pid")) for r in pidhash} if pidhash else None
 
     registered_modules = [
         KernelModule(
-            name=str(_col(r, "Name", "Module", default="?")),
-            base=_int(_col(r, "Address", "Offset", "Base")),
-            size=_int(_col(r, "Size")),
+            name=str(_col(r, "Module Name", "Name", "Module", default="?")),
+            base=_int(_col(r, "Offset", "Address", "Base")),
+            size=_int(_col(r, "Code Size", "Size")),
         )
         for r in lsmod
     ]
     hidden_modules = [
         KernelModule(
-            name=str(_col(r, "Name", "Module", default="?")),
-            base=_int(_col(r, "Address", "Offset", "Base")),
-            size=_int(_col(r, "Size")),
+            name=str(_col(r, "Module Name", "Name", "Module", default="?")),
+            base=_int(_col(r, "Offset", "Address", "Base")),
+            size=_int(_col(r, "Code Size", "Size")),
         )
         for r in hidden
     ]
@@ -258,4 +304,6 @@ def extract(image_path: str | Path, symbols_dir: str | Path) -> MemoryEvidence:
         memory_modules=memory_modules,
         syscall_table=syscall_table,
         kernel_text=_kernel_text(ctx),
+        unavailable_plugins=failed,
+        raw_plugin_rows=raw_plugin_rows,
     )
